@@ -13,7 +13,7 @@ import os
 
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 # Configuración ancha de la página
-st.set_page_config(layout='wide')
+#st.set_page_config(layout='wide')
 
 
 # Escondemos las masrcas de agua y menú hamburguesa
