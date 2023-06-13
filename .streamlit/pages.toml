@@ -6,7 +6,7 @@ icon = "🏠"
 
 
 [[pages]]
-path="Refracción/Refracción.py"
+path="Artículos/Refracción/Refracción.py"
 name="Los fantasmas de la carretera"
 icon = "🛣️"
 
