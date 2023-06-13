@@ -14,14 +14,14 @@ st.set_page_config('Divulgación Científica', '💭', 'wide', initial_sidebar_s
 #add_page_title()
 #show_pages_from_config()
 
-#hide_st_style = """
-#                <style>
-#                #mainMenu {visibility: hidden;}
-#                footer {visibility: hidden;}
-#                header {visibility: hidden;}
-#                </style>
-#"""
-#st.markdown(hide_st_style, unsafe_allow_html=True)
+hide_st_style = """
+                <style>
+                #mainMenu {visibility: hidden;}
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+                </style>
+"""
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 import streamlit.components.v1 as com
 with open('styles.css') as styles:
