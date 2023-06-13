@@ -31,8 +31,8 @@ with open('styles.css') as styles:
 show_pages(
     [
         Page("DC.py", "Home", "🏠"),
-        Section("Artículos", icon="📎"),
-        Page("Refracción/Refracción.py","Los fantasmas de la carretera", icon="🛣️"),
+        Page("Artículos/Artículos.py","Artículos", icon="📎"),
+        Page("Artículos/Refracción/Refracción.py","Los fantasmas de la carretera", icon="🛣️"),
     ]
 )
 
