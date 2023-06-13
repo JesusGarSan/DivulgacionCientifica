@@ -5,6 +5,9 @@ from matplotlib import cm
 
 
 import streamlit as st
+import streamlit.components.v1 as com
+with open('styles.css') as styles:
+    design = styles.read()
 
 st.set_page_config(layout='wide')
 
@@ -20,7 +23,17 @@ def snell(n_1, n_2, O_1):
 
 # -------------------------------------------------------------------
 
-st.title(' Los fantasmas de la carretera')
+#st.title(' Los fantasmas de la carretera')
+com.html(f"""
+         <div>
+         <style>
+         {design}
+         </style>
+         <h1>
+         Los fantasmas de la carretera
+         </h1>
+         </div>
+         """)
 COL1, COL2 = st.columns(2)
 
 COL1.image('charco.png')
@@ -31,6 +44,8 @@ COL2.markdown('''Estos charcos se dejan ver más a menudo en los días soleados 
                 Pero, ¿cuáles son las "condiciones adecuadas"? ¿Qué son si quiera estos "charcos"?.
                 ''')
                 
+
+
 st.divider()
 
 
@@ -62,15 +77,19 @@ ax.set_ylim(-1,1)
 
 ax.text(-1,.85, 'Medio 1', fontsize=24)
 ax.text(-1,-.99, f'Medio {n_medios+1}', fontsize=24)
+ax.fill_between([-1,1], [1,1], color='white') # medio 1
 
 # Rayo incidente
 longitud_rayos = 1
 inc_x = [-longitud_rayos * np.sin(np.pi*O_1/180),0]
 inc_y = [longitud_rayos * np.cos(np.pi*O_1/180),0]
 
+color_incidente='blue'
+
 ax.fill_between([-1,1], [1,1], color='white') # medio 1
 ax.vlines(0, -1, 1, color='grey', linestyles='dashed') # vertical
-ax.plot(inc_x, inc_y, color='blue', label='Rayo incidente')
+ax.plot(inc_x, inc_y, color=color_incidente, label='Rayo incidente')
+ax.arrow( (inc_x[0]+inc_x[1])/2, (inc_y[0]+inc_y[1])/2, 0.02*np.sin(np.pi*O_1/180), -0.02*np.cos(np.pi*O_1/180), width=.008, color=color_incidente, length_includes_head=True)
 
 # Rayo Reflejado
 
@@ -78,9 +97,12 @@ longitud_rayos = .8
 reflejado_x = [longitud_rayos * np.sin(np.pi*O_1/180),0]
 reflejado_y = [longitud_rayos * np.cos(np.pi*O_1/180),0]
 
-ax.fill_between([-1,1], [1,1], color='white') # medio 1
+color_reflexion = 'green'
+
 ax.vlines(0, -1, 1, color='grey', linestyles='dashed') # vertical
-ax.plot(reflejado_x, reflejado_y, color='green', label='Rayo reflejado')
+ax.plot(reflejado_x, reflejado_y, color=color_reflexion, label='Rayo reflejado')
+ax.arrow( (reflejado_x[0]+reflejado_x[1])/2, (reflejado_y[0]+reflejado_y[1])/2, 0.02*np.sin(np.pi*O_1/180), 0.02*np.cos(np.pi*O_1/180),
+         width=.008, color=color_reflexion, length_includes_head=True)
 
 
 # Medios
@@ -96,17 +118,33 @@ for i in range(n_medios):
 O_2=O_1
 refrac_x=[0,0]
 refrac_y=[0,0]
+color_refrac = 'red'
+dibujar_flecha=True
 for i in range(n_medios):
-    O_2 = snell(n_1, n_1+(i+1)*incremento_n, O_2)
+    O_1 = O_2
+    O_2 = snell(n_1, n_1+(i+1)*incremento_n, O_1)
     if O_2!=None:
         longitud_segmentos = 1/n_medios/np.cos(np.pi*O_2/180)
 
         refrac_x = [0 + refrac_x[1], refrac_x[1] + longitud_segmentos * np.sin(np.pi*O_2/180)]
         refrac_y = [0 + refrac_y[1], refrac_y[1] + -longitud_segmentos * np.cos(np.pi*O_2/180)]
-    
-        if i==0: plt.plot(refrac_x, refrac_y, color='red', label='Rayo refractado')
-        else: plt.plot(refrac_x, refrac_y, color='red')
-    else: break
+
+        if n_medios == 1:
+            divisor = 2
+            if refrac_x[1] > 0.5: divisor = refrac_x[1]*2
+            ax.arrow( (refrac_x[0]+refrac_x[1])/divisor, (refrac_y[0]+refrac_y[1])/divisor, 0.02*np.sin(np.pi*O_2/180), -0.02*np.cos(np.pi*O_2/180), width=.008, color=color_refrac, length_includes_head=True)
+            dibujar_flecha=False
+
+        if (refrac_x[0]>0.5 or refrac_y[0]<-0.5) and dibujar_flecha:
+            ax.arrow( refrac_x[0], refrac_y[0], 0.02*np.sin(np.pi*O_2/180), -0.02*np.cos(np.pi*O_2/180), width=.008, color=color_refrac, length_includes_head=True)
+            dibujar_flecha=False
+
+        if i==0: plt.plot(refrac_x, refrac_y, color=color_refrac, label='Rayo refractado')
+        else: plt.plot(refrac_x, refrac_y, color=color_refrac)
+    else:   
+        if dibujar_flecha==True and i>0:
+            ax.arrow( refrac_x[0], refrac_y[0], 0.02*np.sin(np.pi*O_1/180), -0.02*np.cos(np.pi*O_1/180), width=.008, color=color_refrac, length_includes_head=True)
+        break
 
 ax.legend(fontsize=16)
 COL2.pyplot(fig)
@@ -125,7 +163,7 @@ COL1.markdown(r'''La densidad del aire afecta a su índice de refracción. A men
 menor índice de refracción.''')
 
 COL1.markdown(r''' Al calentarse, el aire se expande, por lo que la densidad del aire caliente
-es mayor que la del frío.''')
+es menor que la del frío.''')
 
 
 COL1.markdown(r'''  Es decir: ¡El índice de refracción del aire caliente es menor que el del
