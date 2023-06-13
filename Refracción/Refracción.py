@@ -13,18 +13,18 @@ import os
 
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 # Configuración ancha de la página
-#st.set_page_config(layout='wide')
+st.set_page_config(layout='wide')
 
 
 # Escondemos las masrcas de agua y menú hamburguesa
-#hide_st_style = """
-#                <style>
-#                /*#mainMenu {visibility: hidden;}*/
-#                footer {visibility: hidden;}
-#                header {visibility: hidden;}
-#                </style>
-#"""
-#st.markdown(hide_st_style, unsafe_allow_html=True)
+hide_st_style = """
+                <style>
+                /*#mainMenu {visibility: hidden;}*/
+                footer {visibility: hidden;}
+                header {visibility: hidden;}
+                </style>
+"""
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 # Cargamos los estilos css
