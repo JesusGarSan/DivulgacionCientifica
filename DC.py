@@ -33,6 +33,7 @@ show_pages(
         Page("DC.py", "Home", "🏠"),
         Page("Artículos/Artículos.py","Artículos", icon="📎"),
         Page("Artículos/Refracción/Refracción.py","Los fantasmas de la carretera", icon="🛣️"),
+        Page("/Simulaciones/Simulaciones.py", "Simulaciones", icon="👻"),
     ]
 )
 
