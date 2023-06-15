@@ -27,9 +27,11 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
-# Cargamos los estilos css
+import streamlit.components.v1 as com
 with open('styles.css') as styles:
     design = styles.read()
+#Cargamos los estilos css en la página
+st.markdown(f"{design}", unsafe_allow_html=True)
 
 
 
@@ -132,24 +134,27 @@ def simulador_snell(n_1, n_x, O_1, n_medios):
 
 # ----------------------------------------------------------------------------------- ARTÍCULO --------------------------------------------------------------------------
 
-#st.title(' Los fantasmas de la carretera')
-com.html(f"""
+
+st.markdown(f"""
          <div>
          <style>
-         {design}
          </style>
          <h1>
          Los fantasmas de la carretera
          </h1>
          </div>
-         """)
+         """, unsafe_allow_html=True)
+
+
+
+
 COL1, COL2 = st.columns(2)
 
 COL1.image('Artículos/Refracción/charco.png')
 
 COL2.markdown('''Cuando vamos por la carretera podemos a veces ver unos curiosos "charcos" de agua en la lejanía. Estos "charcos" se esfuman cuando nos acercamos a ellos, como si se evaporasen en pocos segundos.
                 ''')           
-COL2.markdown('''Estos charcos se dejan ver más a menudo en los días soleados y calurosos de verano. Aunque sí se dan las condiciones adecuadas, podemos verlos en cualquier momento del año.
+COL2.markdown('''Estos charcos se dejan ver más a menudo en los días soleados y calurosos de verano. Aunque si se dan las condiciones adecuadas, podemos verlos en cualquier momento del año.
                 Pero, ¿cuáles son las "condiciones adecuadas"? ¿Qué son si quiera estos "charcos"?.
                 ''')
                 
@@ -166,13 +171,13 @@ COL1, COL2 = st.columns(2)
 COL1.markdown('''Para entender bien estos charcos tenemos que entender primero cómo viaja la luz y qué es lo que llamamos "índice de refracción". Pero no te preocupes, que no tiene misterio.
                 ''')
 
-COL1.markdown('''NOTA:  A la derecha verás una simulación de "La ley de Snell". ¡Siéntete libre de jugar con ella mientras lees la explicación!
+COL1.markdown('''**NOTA**:  A la derecha verás una simulación de "_La ley de Snell_". ¡Siéntete libre de jugar con ella mientras lees la explicación!
                 ''')
 
 # Parámetros iniciales
 col1, col2 = COL2.columns(2) 
-n_1 = col1.number_input('Índice de refracción del medio SUPERIOR', 1.,5., value = 1.,format='%.3f')
-n_x = col1.number_input('Índice de refracción del medio INFERIOR', 1.,5., value = 1.2, format='%.3f')
+n_1 = col1.number_input('Índice de refracción del medio superior', 1.,5., value = 1. ,format='%.3f')
+n_x = col1.number_input('Índice de refracción del medio inferior', 1.,5., value = 1.2, format='%.3f')
 
 O_1 = col2.slider('Ángulo de incidencia (º)', 0, 90, value=60)
 n_medios = col2.slider('Número de medios', 2,100)
@@ -185,38 +190,43 @@ COL1.divider()
 COL1.markdown(r'''El índice de refracción nos indica cómo viaja la luz en un medio: aire, agua, vidrio, etc. Cualquier cosa por la que pueda pasar la luz.''' )
 
 COL1.markdown(r'''Al pasar de un medio a otro con distinto índice de refracción suceden dos cosas:''')
-COL1.markdown(r'''  - La luz que incide se refleja, regresando al medio del que provenía pero en otra dirección. A esto le llamamos "Reflexión".''', help='El ángulo entre la vertical y el rayo que incide es el mismo que hay entre la vertical y el rayo reflejado. ¡Compruébalo!')
+COL1.markdown(r'''  - La luz que incide se refleja, regresando al medio del que provenía pero en otra dirección. A esto le llamamos **_"Reflexión"_**.''', help='El ángulo entre la vertical y el rayo que incide es el mismo que hay entre la vertical y el rayo reflejado. ¡Compruébalo!')
 
-COL1.markdown(r'''- La luz pasa al otro medio, desviándose abruptamente en el proceso. A este fenómeno le llamamos "Refracción". ''', help='Dependiendo de si el nuevo índice es mayor o menor, la desviación se produce en un sentido u otro. ¡Compruébalo!')
+COL1.markdown(r'''- La luz pasa al otro medio, desviándose abruptamente en el proceso. A este fenómeno le llamamos **_"Refracción"_**. ''', help='Dependiendo de si el nuevo índice es mayor o menor, la desviación se produce en un sentido u otro. ¡Compruébalo!')
 
 COL1.markdown(r'''Un cambio de medios sucesivo, hace que la luz se "curve", aparentemente.''', help='Prueba a seleccionar un "Número de medios" alto.')
 
-COL1.markdown(r'''La densidad del aire afecta a su índice de refracción. A menor densidad,
+COL1.markdown(r'''La **densidad** del aire afecta a su índice de refracción. A menor densidad,
 menor índice de refracción.''')
 
-COL1.markdown(r''' Al calentarse, el aire se expande, por lo que la densidad del aire caliente
-es menor que la del frío.''')
+COL1.markdown(r''' Al calentarse, el aire se expande, por lo que su densidad se reduce. Es decir, la densidad del aire caliente es menor que la del aire frío.''')
 
 
-COL1.markdown(r'''  Es decir: ¡El índice de refracción del aire caliente es menor que el del
+COL1.markdown(r'''  Y por tanto: ¡El índice de refracción del aire caliente es menor que el del
 aire frío!''')
 
 COL1.latex(r'''
-    Temperatura \uparrow \,\, \Longrightarrow densidad \downarrow \,\, \Longrightarrow índice \,\,  refracción \downarrow
+    Temperatura \uparrow \,\, \Longrightarrow densidad \downarrow \,\, \Longrightarrow \acute{i}ndice \,\,  refracci\acute{o}n \downarrow
 ''')
 
 
-st.header('Pero: ¿qué pinta la temperatura aquí?')
+st.header('Pero: ¿qué tiene esto que ver con los charcos?')
+COL1, COL2 = st.columns(2) 
 
 st.markdown('Como hemos visto, medios con diferentes índices de refracción refractan la luz de distinta manera (de forma más o menos pronunciada y en un sentido u otro).')
-st.markdown('El asfalto de las carreteras suele estar a temperaturas relativamente altas, tanto por el caso de los coches como por el brillo del Sol (¡más aun en verano!).')
+st.markdown('El asfalto de las carreteras suele estar a temperaturas relativamente altas, tanto por el paso de los coches como por el brillo del Sol (¡más aun en verano!).')
 st.markdown('De este modo, el alfalto hace como de sartén para el aire que lo toca, haciendo que el aire que está más cerca del asfalto se encuentre muy caliente, y progresivamente más frío según nos elevamos.')
-st.markdown('Hemos dicho que el aire a mayor temperatura cuenta con un índice de refracción menor. ¿Qué pasará si en nuestra simulación indicamos un índice de refracción alto para el Medio 1 (aire frío, lejos del asfalto), y un índice de refracción bajo para el medio más cercano al asfalto (aire caliente)?. ¡Haz la prueba!')
-st.markdown('Cómo puedes ver, el rayo de luz se eleva con respecto al rayo de luz incidente. Si hacemos mayor la diferencia de los índices de refracción vemos que el efecto se amplifica. Lo mismo pasa en los días calurosos de verano, cuando el asfalto está más caliente.')
-st.markdown('¡Podemos ir un paso más allá! Si aumentamos el número de medios, simularemos las distintas capas de aire que se forman: más calientes abajo, más frías arriba. Podemos ver como las distintas capas de aire hacen que el rayo de luz se refracte sin llegar a tocar el suelo.')
-st.markdown('Si la elevación del rayo de luz debido a la refracción es la suficiente, podemos llegar a ver un rayo de luz proveniente del cielo como si vienese del suelo, ¡al igual que pasa con el reflejo de un charco!')
+COL1.markdown('Hemos dicho que el aire a mayor temperatura cuenta con un índice de refracción menor. ¿Qué pasará si en nuestra simulación indicamos un índice de refracción alto para el Medio 1 (aire frío, lejos del asfalto), y un índice de refracción bajo para el medio más cercano al asfalto (aire caliente)?. ¡Haz la prueba!')
+COL2.image('Artículos/Refracción/ejemplo_elevación.png')
+COL1.markdown('Cómo puedes ver, el rayo de luz se eleva con respecto al rayo de luz incidente. Si hacemos mayor la diferencia de los índices de refracción vemos que el efecto se amplifica. Lo mismo pasa en los días calurosos de verano, cuando el asfalto está más caliente.')
+COL2.markdown('¡Podemos ir un paso más allá! Si aumentamos el número de medios, simularemos las distintas capas de aire que se forman: más calientes abajo, más frías arriba. Podemos ver como las distintas capas de aire hacen que el rayo de luz se refracte sin llegar a tocar el suelo.')
+COL1.image('Artículos/Refracción/ejemplo_multicapa.png')
+COL2.markdown('Si la elevación del rayo de luz debido a la refracción es la suficiente, podemos llegar a ver un rayo de luz proveniente del cielo como si vienese del suelo, ¡al igual que pasa con el reflejo de un charco!')
+st.markdown('')
 
 st.markdown('')
+
+
 
 
 
