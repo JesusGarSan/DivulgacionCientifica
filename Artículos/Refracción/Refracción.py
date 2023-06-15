@@ -216,12 +216,15 @@ COL1, COL2 = st.columns(2)
 st.markdown('Como hemos visto, medios con diferentes índices de refracción refractan la luz de distinta manera (de forma más o menos pronunciada y en un sentido u otro).')
 st.markdown('El asfalto de las carreteras suele estar a temperaturas relativamente altas, tanto por el paso de los coches como por el brillo del Sol (¡más aun en verano!).')
 st.markdown('De este modo, el alfalto hace como de sartén para el aire que lo toca, haciendo que el aire que está más cerca del asfalto se encuentre muy caliente, y progresivamente más frío según nos elevamos.')
+
 COL1.markdown('Hemos dicho que el aire a mayor temperatura cuenta con un índice de refracción menor. ¿Qué pasará si en nuestra simulación indicamos un índice de refracción alto para el Medio 1 (aire frío, lejos del asfalto), y un índice de refracción bajo para el medio más cercano al asfalto (aire caliente)?. ¡Haz la prueba!')
 COL2.image('Artículos/Refracción/ejemplo_elevación.png')
 COL1.markdown('Cómo puedes ver, el rayo de luz se eleva con respecto al rayo de luz incidente. Si hacemos mayor la diferencia de los índices de refracción vemos que el efecto se amplifica. Lo mismo pasa en los días calurosos de verano, cuando el asfalto está más caliente.')
 COL2.markdown('¡Podemos ir un paso más allá! Si aumentamos el número de medios, simularemos las distintas capas de aire que se forman: más calientes abajo, más frías arriba. Podemos ver como las distintas capas de aire hacen que el rayo de luz se refracte sin llegar a tocar el suelo.')
+COL1.markdown('')
 COL1.image('Artículos/Refracción/ejemplo_multicapa.png')
 COL2.markdown('Si la elevación del rayo de luz debido a la refracción es la suficiente, podemos llegar a ver un rayo de luz proveniente del cielo como si vienese del suelo, ¡al igual que pasa con el reflejo de un charco!')
+
 st.markdown('')
 
 st.markdown('')
