@@ -26,6 +26,8 @@ st.markdown(hide_st_style, unsafe_allow_html=True)
 import streamlit.components.v1 as com
 with open('styles.css') as styles:
     design = styles.read()
+#Cargamos lso estilos css en la página
+st.markdown(f"{design}", unsafe_allow_html=True)
 
 
 show_pages(
@@ -33,7 +35,7 @@ show_pages(
         Page("DC.py", "Home", "🏠"),
         Page("Artículos/Artículos.py","Artículos", icon="📎"),
         Page("Artículos/Refracción/Refracción.py","Los fantasmas de la carretera", icon="🛣️"),
-        Page("/Simulaciones/Snell.py", "Simulaciones", icon="👻"),
+        Page("Simulaciones/Snell.py", "Simulaciones", icon="👻"),
     ]
 )
 
@@ -41,18 +43,15 @@ show_pages(
 
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
 
-st.header("melendi")
+st.markdown(f"""
+            <h1>
+            Divulgación Científica
+            </h1>
+            """, unsafe_allow_html=True)
 
 COL1, COL2 = st.columns(2)
 
-com.html(f"""
-         <div>
-         <style>
-         {design}
-         </style>
-         <h2 class="column>
-         Artículos recientes
-         </h2>
-         </div>
-         """)
+
+
+
 
