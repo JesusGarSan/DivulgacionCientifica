@@ -31,7 +31,8 @@ import streamlit.components.v1 as com
 with open('styles.css') as styles:
     design = styles.read()
 #Cargamos los estilos css en la página
-st.markdown(f"{design}", unsafe_allow_html=True)
+st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
+
 
 
 
@@ -246,7 +247,4 @@ import cuestionario
 cuestionario.mostrar_cuestionario()
 
 # ----------------------------------------------------------------------------- FOOTER ----------------------------------------------------------------------------------
-
-
-
 
