@@ -4,6 +4,7 @@ import streamlit as st
 from st_pages import Page, Section, show_pages, show_pages_from_config, add_page_title
 
 
+
 # ---------------------------------------------------------------------
 
 
@@ -23,11 +24,8 @@ hide_st_style = """
 """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
-import streamlit.components.v1 as com
-with open('styles.css') as styles:
-    design = styles.read()
 #Cargamos lso estilos css en la página
-st.markdown(f"{design}", unsafe_allow_html=True)
+st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
 
 
 show_pages(
@@ -50,7 +48,6 @@ st.markdown(f"""
             """, unsafe_allow_html=True)
 
 COL1, COL2 = st.columns(2)
-
 
 
 
