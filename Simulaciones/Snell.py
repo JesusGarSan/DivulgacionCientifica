@@ -31,7 +31,16 @@ st.set_page_config(layout='wide')
 #with open('styles.css') as styles:
 #    design = styles.read()
 
+from st_pages import Page, Section, show_pages, show_pages_from_config, add_page_title
 
+#show_pages(
+#    [
+#        Page("DC.py", "Home", "🏠"),
+#        Page("Artículos/Artículos.py","Artículos", icon="📎"),
+#        Page("Artículos/Refracción/Refracción.py","Los fantasmas de la carretera", icon="🛣️"),
+#        Page("Simulaciones/Snell.py", "Simulaciones", icon="👻"),
+#    ]
+#)
 
 
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
@@ -40,12 +49,14 @@ st.set_page_config(layout='wide')
 
 class rayo:
     def __init__(self, origen, longitud ,theta, sentido):
+
+
         self.origen = np.array(origen)
         self.longitud = longitud
-        self.theta = theta
-        self.extremo = np.array(polares(self.origen, longitud, theta)) + np.array(self.origen)
-
         self.sentido = sentido
+        self.theta = np.abs(theta)
+        self.extremo = np.array(polares(self.origen, longitud, theta))# + np.array(self.origen)
+
 
     def stats(self):
         print(f"""
@@ -65,16 +76,30 @@ class rayo:
         if self.sentido== -1:
             fronteras_intermedias = np.where((self.origen[1]>fronteras) & (self.extremo[1]<fronteras))[0]
         # Reasiganmos el nuevo valor de extremo (si se han encontrado fronteras intermedias)
+        #print(fronteras[fronteras_intermedias])
         if  len(fronteras_intermedias) > 0:
-            print(fronteras[fronteras_intermedias])
             if self.sentido== +1: indice_nuevo_extremo = fronteras_intermedias[len(fronteras_intermedias)-1]
             if self.sentido== -1: indice_nuevo_extremo = fronteras_intermedias[0]
             nuevo_extremo = fronteras[indice_nuevo_extremo]
+            if self.sentido== +1:
+                print(nuevo_extremo)
+                print(self.origen[0])
+                print(self.origen[1])
+                print(self.extremo[0])
+                print(self.extremo[1])
+                
+                #self.extremo[0] = np.abs(self.extremo[0])
+                #self.extremo[0] += -2*self.extremo[0]
+                #self.extremo[0] += self.origen[0]
            
             self.extremo[0] = nuevo_extremo / self.extremo[1] * self.extremo[0]
             self.extremo[1] = nuevo_extremo
+            if self.sentido== +1:
+                print('----------')
+                print(self.extremo[0])
+                print(self.extremo[1])
 
-            
+                self.extremo[0] = (self.origen[0] - self.extremo[0]) * 2
 
             recortado = True
 
@@ -97,18 +122,15 @@ class rayo:
 
 
     def reflejar(self):
-        rayo_reflejado = rayo(origen= self.extremo, longitud=3 ,theta= self.theta, sentido=-self.sentido)
+        rayo_reflejado = rayo(origen= self.extremo, longitud=1, theta= self.theta, sentido=-self.sentido)
+
         return rayo_reflejado
 
     def refractar(self, n_1, n_2):
         theta = snell(n_1, n_2, self.theta)
         if theta!=None:
-            rayo_refractado = rayo(origen= self.extremo, longitud=3 ,theta= theta, sentido=self.sentido)
+            rayo_refractado = rayo(origen= self.extremo, longitud=10 ,theta= theta, sentido=self.sentido)
             rayo_refractado.extremo[1] = np.abs(rayo_refractado.extremo[1]) * rayo_refractado.sentido
-
-            rayo_refractado.extremo[1]+=self.extremo[1]
-            rayo_refractado.extremo[0]+=self.extremo[0]
-
             return rayo_refractado
         else: return None
 
@@ -163,11 +185,14 @@ def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones):
     x = -np.sin(np.pi*O_1/180)
     y = +np.cos(np.pi*O_1/180)
 
-    rayo_incidente = rayo(origen = [x,y], longitud = longitud_rayos, theta = O_1, sentido=-1) #Creamos el rayo como objeto
-    rayo_incidente.extremo =[0,0]    
+    rayo_incidente = rayo(origen = [0,0], longitud = longitud_rayos, theta = -O_1, sentido=-1) #Creamos el rayo como objeto
+    aux = rayo_incidente.extremo
+    rayo_incidente.extremo = rayo_incidente.origen
+    rayo_incidente.origen = aux
     rayo_incidente.recortar(fronteras, True)
     rayo_incidente.plot_rayo('blue', arrow= True)
 
+    rayo_incidente.stats()
 
     # Primer rayo reflejado
     rayo_reflejado = rayo_incidente.reflejar()
@@ -175,53 +200,38 @@ def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones):
     rayo_reflejado.plot_rayo('green', arrow=True)
 
 
-    # Primer rayo refractado
-    rayo_refractado = rayo_incidente.refractar(n[0], n[1])
-    rayo_refractado.recortar(fronteras, True)
-    rayo_refractado.plot_rayo('red', arrow=True)
-
-    rayo_reflejado = rayo_refractado.reflejar()
-    rayo_reflejado.recortar(fronteras, plot_colision=False)
-    rayo_reflejado.plot_rayo('green', arrow=True)
-
-    # Primer rayo refractado
-    rayo_refractado_2 = rayo_refractado.refractar(n[1], n[2])
-    rayo_refractado_2.recortar(fronteras, True)
-    rayo_refractado_2.plot_rayo('red', arrow=True)
-    print(f"refractado angulo: {rayo_refractado_2.theta}")
-
-    rayo_reflejado_2 = rayo_refractado_2.reflejar()
-    rayo_reflejado_2.recortar(fronteras, plot_colision=False)
-    rayo_reflejado_2.plot_rayo('green', arrow=True)
-    print(f"refractado angulo: {rayo_reflejado_2.theta}")
-    rayo_reflejado_2.stats()
-
-    #aux_rayo_incidente = copy.deepcopy(rayo_incidente)
-    #for i in range (n_medios):
+    ## Primer rayo refractado
+    #rayo_refractado = rayo_incidente.refractar(n[0], n[1])
+    #rayo_refractado.recortar(fronteras, True)
+    #rayo_refractado.plot_rayo('red', arrow=True)
+    #rayo_refractado.stats()
+##
+    #rayo_incidente=rayo_refractado
+    ## segundo rayo refractado
+    #rayo_refractado = rayo_incidente.refractar(n[1], n[2])
+    #rayo_refractado.recortar(fronteras, True)
+    #rayo_refractado.plot_rayo('red', arrow=True)
 
 
-    #    # Refracciones
-    #    rayo_refractado = aux_rayo_incidente.refractar(n[i], n[i+1] )
-    #    if rayo_refractado!=None:
-    #        rayo_refractado.recortar(fronteras, True)
-    #        rayo_refractado.plot_rayo('red', arrow= False)
-    #    
-    #        aux_rayo_incidente = copy.deepcopy(rayo_refractado)
+    col1.write(n)
+    col2.write(fronteras)
+    aux_rayo_incidente = copy.deepcopy(rayo_incidente)
+    for i in range (n_medios):
+        # Refracciones
+        rayo_refractado = aux_rayo_incidente.refractar(n[i], n[i+1] )
+        if rayo_refractado!=None:
+            rayo_refractado.recortar(fronteras, plot_colision=False)
+            rayo_refractado.plot_rayo('red', arrow= False)
+            if i==n_medios//2: rayo_refractado.plot_rayo('red', arrow= True)
+        
+            aux_rayo_incidente = copy.deepcopy(rayo_refractado)
 
-    #    # Reflexiones
-    #    rayo_reflejado = aux_rayo_incidente.reflejar()
-    #    #rayo_reflejado.recortar(fronteras, plot_colision=True)
-    #    rayo_reflejado = aux_rayo_incidente.reflejar()
-    #    rayo_reflejado.plot_rayo('green', arrow=True)
-
-
-
-
-
-    centro = [0, -0.5]
-    print(polares(centro, 1 ,90))
-    rayo_test = rayo(origen=centro, longitud=0.2, theta=120, sentido = 1)
-    rayo_test.plot_rayo('purple', True)
+        # Reflexiones
+        rayo_reflejado = aux_rayo_incidente.reflejar()
+        rayo_reflejado.recortar(fronteras, plot_colision=True)
+        rayo_reflejado.plot_rayo('green', arrow=True)
+        #print(f"rayo reflejado {i}")
+        #rayo_reflejado.stats()
 
 
     return fig
@@ -321,7 +331,7 @@ n_1 = col1.number_input('Índice de refracción del medio SUPERIOR', 1.,5., valu
 n_x = col1.number_input('Índice de refracción del medio INFERIOR', 1.,5., value = 1.2, format='%.3f')
 
 O_1 = col2.slider('Ángulo de incidencia (º)', 0, 90, value=60)
-n_medios = col2.slider('Número de medios', 2,100)
+n_medios = col2.slider('Número de medios', 2,40)
 n_medios-=1
 COL2.pyplot(simulador_snell(n_1, n_x, O_1, n_medios, False))
 
