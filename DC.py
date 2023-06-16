@@ -33,7 +33,9 @@ show_pages(
         Page("DC.py", "Home", "🏠"),
         Page("Artículos/Artículos.py","Artículos", icon="📎"),
         Page("Artículos/Refracción/Refracción.py","Los fantasmas de la carretera", icon="🛣️"),
-        Page("Simulaciones/Snell.py", "Simulaciones", icon="👻"),
+        Section('Simulaciones', icon="👻"),
+        Page("Simulaciones/Snell.py", "Ley de Snell", icon="〽️"),
+        Page("Simulaciones/Doppler.py", "Efecto Doppler", icon="🎯"),
     ]
 )
 
