@@ -7,7 +7,6 @@ from matplotlib import cm
 
 import streamlit as st
 import streamlit.components.v1 as com
-import streamlit_analytics
 
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 
