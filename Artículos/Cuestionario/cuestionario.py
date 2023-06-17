@@ -1,3 +1,4 @@
+# ----------------------------------------------------------------------- IMPORTACIÓN DE LIBRERÍAS ------------------------------------------------------------------------
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
@@ -6,6 +7,11 @@ from matplotlib import cm
 
 import streamlit as st
 import streamlit.components.v1 as com
+import streamlit_analytics
+
+# ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
+
+
 with open('styles.css') as styles:
     design = styles.read()
 
@@ -115,29 +121,29 @@ def pregunta_simulacion():
 
 def mostrar_cuestionario():
 
-        if 'respuesta_1' not in st.session_state:
-            st.session_state.respuesta_1 = False
 
-        if 'respuesta_2' not in st.session_state:
-            st.session_state.respuesta_2 = False
+    if 'respuesta_1' not in st.session_state:
+        st.session_state.respuesta_1 = False
 
-        if 'respuesta_3' not in st.session_state:
-            st.session_state.respuesta_3 = False
+    if 'respuesta_2' not in st.session_state:
+        st.session_state.respuesta_2 = False
 
-        com.html(f"""
-            <style>
-            {design}
-            </style>
-            <h1>
-            ¡Gracias por leer!
-            </h1>
-            """, height=100)
+    if 'respuesta_3' not in st.session_state:
+        st.session_state.respuesta_3 = False
+
+    com.html(f"""
+        <style>
+        {design}
+        </style>
+        <h1>
+        ¡Gracias por leer!
+        </h1>
+        """, height=100)
 
 
-        if pregunta_tema() == True: st.experimental_rerun()
-        if pregunta_explicacion() == True: st.experimental_rerun()
-        if pregunta_simulacion() == True: st.experimental_rerun()
-
+    if pregunta_tema() == True: st.experimental_rerun()
+    if pregunta_explicacion() == True: st.experimental_rerun()
+    if pregunta_simulacion() == True: st.experimental_rerun()
 
 
 #                        ------------------- TESTS DE DESARROLLO --------------------

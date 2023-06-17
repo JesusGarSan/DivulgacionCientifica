@@ -10,6 +10,7 @@ import streamlit as st
 import streamlit.components.v1 as com
 
 import os
+from streamlit_extras.stoggle import stoggle
 
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 # Configuración ancha de la página
@@ -27,10 +28,7 @@ hide_st_style = """
 st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
-import streamlit.components.v1 as com
-with open('styles.css') as styles:
-    design = styles.read()
-#Cargamos los estilos css en la página
+
 st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
 
 
@@ -49,6 +47,7 @@ def snell(n_1, n_2, O_1):
 
 
 #Dibujado y ploteo del simulador
+@st.cache_data
 def simulador_snell(n_1, n_x, O_1, n_medios):
     incremento_n = (n_x - n_1)/n_medios
 
@@ -129,7 +128,9 @@ def simulador_snell(n_1, n_x, O_1, n_medios):
             break
 
     ax.legend(fontsize=16)
-    COL2.pyplot(fig)
+    
+    return fig
+    #COL2.pyplot(fig)
 
 
 
@@ -183,7 +184,9 @@ n_x = col1.number_input('Índice de refracción del medio inferior', 1.,5., valu
 O_1 = col2.slider('Ángulo de incidencia (º)', 0, 90, value=60)
 n_medios = col2.slider('Número de medios', 2,100)
 n_medios-=1
-simulador_snell(n_1, n_x, O_1, n_medios)
+fig = simulador_snell(n_1, n_x, O_1, n_medios)
+COL2.pyplot(fig)
+
 
 COL1.divider()
 

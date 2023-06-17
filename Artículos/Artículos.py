@@ -2,7 +2,10 @@
 import streamlit as st
 
 from st_pages import Page, Section, show_pages, show_pages_from_config, add_page_title
-import webbrowser
+
+from streamlit_extras.switch_page_button import switch_page
+from streamlit_extras.stoggle import stoggle
+from streamlit_image_coordinates import streamlit_image_coordinates
 
 
 # ---------------------------------------------------------------------
@@ -34,8 +37,9 @@ with open('styles.css') as styles:
 
 COL1, COL2 = st.columns(2)
 
-
+last_coordinates=None
+#last_coordinates = streamlit_image_coordinates("Artículos/Refracción/charco.png")
 COL1.image("Artículos/Refracción/charco.png")
-if COL1.button('Los fantasmas de las carreteras', use_container_width=True):
-    webbrowser.open_new("https://jesusgarsan-divulgacioncientifica-dc-1cv9hy.streamlit.app/Los%20fantasmas%20de%20la%20carretera")
+if COL1.button('Los fantasmas de la carretera', use_container_width=True) or last_coordinates!=None:
+    switch_page("Los fantasmas de la carretera")
 
