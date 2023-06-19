@@ -7,7 +7,6 @@ from st_pages import Page, Section, show_pages, show_pages_from_config, add_page
 from streamlit_extras.switch_page_button import switch_page
 from streamlit_extras.stoggle import stoggle
 from streamlit_image_coordinates import streamlit_image_coordinates
-from streamlit_cropper import st_cropper
 
 # ---------------------------------------------------------------------
 
@@ -53,19 +52,27 @@ st.markdown(f"""
             </h1>
             """, unsafe_allow_html=True)
 
-columns = st.columns(2)
+column = st.columns(2)
 
-columns[0].header('**Artículos recientes**')
-columns[1].header('**Últimas Simulaciones**')
+column[0].header('**Artículos recientes**')
+column[1].header('**Últimas Simulaciones**')
 
 
 # ---- COLUMNA ARTÍCULOS ----
 
 
 img = Image.open("Galería/charco.png")
-img = img.resize((500,250))
-columns[0].image(img, use_column_width=True )
-if columns[0].button('Los fantasmas de la carretera', use_container_width=True):
+img = img.resize((600,300))
+column[0].image(img, use_column_width=True )
+
+# -- IMAGEN CLICKEABLE (WIP)
+last_coordinates=None
+#with column[0]:
+#    last_coordinates = streamlit_image_coordinates(img,)
+
+
+
+if column[0].button('Los fantasmas de la carretera', use_container_width=True) or last_coordinates!=None:
     switch_page("Los fantasmas de la carretera")
 
 
@@ -75,8 +82,8 @@ if columns[0].button('Los fantasmas de la carretera', use_container_width=True):
     # Efecto Doppler
 img = Image.open("Galería/Doppler.png")
 img = img.resize((500,250))
-columns[1].image(img, use_column_width=True )
-if columns[1].button('Efecto Doppler', use_container_width=True):
+column[1].image(img, use_column_width=True )
+if column[1].button('Efecto Doppler', use_container_width=True):
     switch_page("Efecto Doppler")
     
     
@@ -84,12 +91,18 @@ if columns[1].button('Efecto Doppler', use_container_width=True):
     # Ley de Snell
 img = Image.open("Galería/Snell.png")
 img = img.resize((500,250))
-columns[1].image(img, use_column_width=True )
-if columns[1].button('Ley de Snell', use_container_width=True):
+column[1].image(img, use_column_width=True )
+if column[1].button('Ley de Snell', use_container_width=True):
     switch_page("Ley de Snell")
     
     
+
     
     
     
-    
+
+
+
+# ---- MEJORAS PENDIENTES -----
+# La lógica para que se pueda clickear en las imágenes para ir al enlace está incorporada, falta que el tamaño de las imágenes se adapte al del contenedor (use_container_width manual)
+# Tamibén sería deseable un feedback que la haga lucir "clickeable" al pasar el raton por encima (On_hover). Tal vez baste con el aplicar el comportamiento normal del botón on hover
