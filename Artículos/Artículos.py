@@ -35,11 +35,11 @@ with open('styles.css') as styles:
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
 
 
-COL1, COL2 = st.columns(2)
+column = st.columns(2)
 
 last_coordinates=None
 #last_coordinates = streamlit_image_coordinates("Artículos/Refracción/charco.png")
-COL1.image("Artículos/Refracción/charco.png")
-if COL1.button('Los fantasmas de la carretera', use_container_width=True) or last_coordinates!=None:
+column[0].image("Artículos/Refracción/charco.png")
+if column[0].button('Los fantasmas de la carretera', use_container_width=True) or last_coordinates!=None:
     switch_page("Los fantasmas de la carretera")
 
