@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from IPython.display import HTML
 import numpy as np
+import librosa
+import soundfile as sf
+
 
 
 import streamlit as st
 import streamlit.components.v1 as com
 
-import os
+
+from streamlit_toggle import st_toggle_switch
 
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 # Configuración ancha de la página
@@ -48,6 +52,7 @@ from st_pages import Page, Section, show_pages, show_pages_from_config, add_page
 
 #------------------------------------------------------------------------- DEFINICIÓN DE FUNCIONES ------------------------------------------------------------------------
 
+
 # Efecto Doppler
 def Doppler(v_f, v_r, f_0):
 
@@ -66,6 +71,16 @@ def Doppler(v_f, v_r, f_0):
 def kmh_to_ms(kmh):
     return kmh*3600/1000
 
+#@st.cache_data
+def Doppler_audio(input_file, output_file, delta_f):
+    # Cargar el archivo de audio
+    audio_data, sample_rate = librosa.load(input_file, sr=None)
+
+    # Alterar la frecuencia
+    audio_data_alterado = librosa.effects.pitch_shift(audio_data, sr=sample_rate, n_steps=int(delta_f/100))
+
+    # Crear archivo de audio con la frecuencia alterada
+    sf.write(output_file, audio_data_alterado, sample_rate)
 
 @st.cache_data
 def crear_animación(parametros_cache):
@@ -170,54 +185,78 @@ intervalo_emision = 4  # Intervalo entre emisiones. Propósitos gráficos
 #-----------------------------------------------------------------------------------------------
 
 
-col1, col2, col3, col4 = st.columns(4)
+column = st.columns(4)
 
-col1.markdown('**EMISOR (Punto naranja):**')
-#posicion_inicial_emisor_y = col1.slider('Vertical', -dim_y/2, dim_y/2, 0.0 )
-velocidad_emisor = col1.number_input('Velocidad (m/s)', value= 10.0, min_value=-30.0, max_value=+30.0, step= 1.0, )
-f_emisor = col1.number_input('Frecuencia emitida (Hz)', value= 5000, min_value=10, max_value=20000, step= 100, )
-posicion_inicial_emisor_x = col1.slider('Posición horizontal', -dim_x/2, dim_x/2, -dim_x/3 )
+column[0].markdown('**EMISOR (Punto naranja):**')
+#posicion_inicial_emisor_y = column[0].slider('Vertical', -dim_y/2, dim_y/2, 0.0 )
+velocidad_emisor = column[0].number_input('Velocidad (m/s)', value= 10.0, min_value=-30.0, max_value=+30.0, step= 1.0, )
+f_emisor = column[0].number_input('Frecuencia emitida (Hz)', value= 5000, min_value=10, max_value=20000, step= 100, )
+posicion_inicial_emisor_x = column[0].slider('Posición horizontal', -dim_x/2, dim_x/2, -dim_x/3 )
 
-col2.markdown('**RECEPTOR (Punto rojo):**')
-#posicion_inicial_receptor_y = col2.slider('Vertical', -dim_y/2, dim_y/2, 0.0, key='y_receptor' )
-velocidad_receptor = col2.number_input('Velocidad (m/s)', value= 0.0, min_value=-30.0, max_value=+30.0, step= 1.0, key='velocidad_receptor' )
-col2.markdown('Frecuenca recibida:')
-col2.markdown(f"{round( Doppler(velocidad_emisor, velocidad_receptor, f_emisor), 2) } Hz")
-posicion_inicial_receptor_x = col2.slider('Posición horizontal', -dim_x/2, dim_x/2, +dim_x/3, key='x_receptor' )
+column[1].markdown('**RECEPTOR (Punto rojo):**')
+#posicion_inicial_receptor_y = column[1].slider('Vertical', -dim_y/2, dim_y/2, 0.0, key='y_receptor' )
+velocidad_receptor = column[1].number_input('Velocidad (m/s)', value= 0.0, min_value=-30.0, max_value=+30.0, step= 1.0, key='velocidad_receptor' )
+column[1].markdown('Frecuenca recibida:')
+f_receptor = round( Doppler(velocidad_emisor, velocidad_receptor, f_emisor), 2)
+column[1].markdown(f"{f_receptor } Hz")
+posicion_inicial_receptor_x = column[1].slider('Posición horizontal', -dim_x/2, dim_x/2, +dim_x/3, key='x_receptor' )
 
 velocidad_emisor*=escala
 velocidad_receptor*=escala
 
 
-col4.markdown('**Parámetros físicos**')
+column[3].markdown('**Parámetros físicos**')
 
-romper_fisica = col4.checkbox('Romper la física:', False)
-velocidad_sonido = col4.number_input('Velocidad del sonido (m/s)', value = 343.2, min_value=1.0, max_value=2000.0, disabled=not(romper_fisica), help='')
-escala_velocidad = col4.number_input('Escala de velocidad (1/...?)', value = 10.0, min_value=1.0, max_value=1000.0, disabled=not(romper_fisica), help='Reducción artificial de la velocidad para que sea observable en la animación (No se considera esta reducción en los cálculos.)')
+with column[3]:
+    romper_fisica= st_toggle_switch('Romper la física', track_color='#FF4B4B', active_color='#FF4B4B')
+velocidad_sonido = column[3].number_input('Velocidad del sonido (m/s)', value = 343.0, min_value=1.0, max_value=2000.0, disabled=not(romper_fisica), help='')
+escala_velocidad = column[3].number_input('Escala de velocidad (1/...?)', value = 10.0, min_value=1.0, max_value=1000.0, disabled=not(romper_fisica), help='Reducción artificial de la velocidad para que sea observable en la animación (No se considera esta reducción en los cálculos.)')
 
 
-col3.markdown('**ANIMACIÓN**')
-intervalo_emision = col3.number_input('Intervalo de emisión', value=4, min_value=1, max_value=20, help='Número de frames entre una emisión y la siguiente')
-n_frames = col3.number_input('Nº de fotogramas', value=30, min_value=1, max_value=100, help='Número de imágenes que constituyen la animación')
-velocidad_animacion = col3.number_input('Tiempo entre frames', value=50, min_value=10, max_value=100)
+column[2].markdown('**ANIMACIÓN**')
+intervalo_emision = column[2].number_input('Intervalo de emisión', value=4, min_value=1, max_value=20, help='Número de frames entre una emisión y la siguiente')
+n_frames = column[2].number_input('Nº de fotogramas', value=30, min_value=1, max_value=100, help='Número de imágenes que constituyen la animación')
+velocidad_animacion = column[2].number_input('Tiempo entre frames', value=50, min_value=10, max_value=100)
 
 
 parametros_cache = [velocidad_emisor, velocidad_receptor, f_emisor, posicion_inicial_emisor_x, posicion_inicial_receptor_x,
                     intervalo_emision, n_frames, velocidad_animacion, velocidad_sonido, escala_velocidad]
+
 
 crear_animación(parametros_cache)
 
 
 
 # ESTO SE QUEDA PENDIENTE DE HACERLO CON G-AUDIO DELANTE Y PODER TIRAR DE ESE CÓDIGO
-col1, col2, col3, col3 = st.columns(4)
-archivo = col1.file_uploader('Sube tu audio', type='mp3')
+column = st.columns(2)
+archivo = column[0].file_uploader('Sube tu audio', type=['mp3', 'wav', 'flac', 'ogg', 'aiff', 'AU'], accept_multiple_files=False)
 
-#import librosa
-#if archivo:
-#    y, sr = librosa.load(archivo)
-#    print(y)
-#
-#    stft = librosa.stft(y)
-#    
-#    print(stft.shape)
+from streamlit_extras.no_default_selectbox import selectbox
+with column[0]:
+    seleccion = selectbox('O utiliza alguno de los de prueba:', options=['sirena.wav', '_secret_.mp3'])
+
+
+
+if archivo and seleccion ==None:
+    filename = archivo.name
+elif seleccion !=None:
+    archivo = 'Simulaciones/'+seleccion
+    filename = seleccion
+    
+if archivo or seleccion!=None:
+    input_file=archivo
+    output_file = 'Simulaciones/Doppler_test.wav'
+    delta_f = f_receptor-f_emisor  # Frecuencia a aumentar en Hz
+
+    with column[1]:
+        Doppler_audio(input_file, output_file, delta_f)
+
+    column[1].markdown(f'**Audio Original** ({filename}):')
+    column[1].audio(archivo)
+
+    if delta_f>0: column[1].markdown(f'**Audio Alterado**(+{round(delta_f)}Hz) : ')
+    if delta_f<=0: column[1].markdown(f'**Audio Alterado**({round(delta_f)}Hz) : ')
+    audio_file = open(output_file, 'rb')
+    column[1].audio(audio_file)
+
+

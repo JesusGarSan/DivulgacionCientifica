@@ -7,7 +7,6 @@ from st_pages import Page, Section, show_pages, show_pages_from_config, add_page
 from streamlit_extras.switch_page_button import switch_page
 from streamlit_extras.stoggle import stoggle
 from streamlit_image_coordinates import streamlit_image_coordinates
-from streamlit_cropper import st_cropper
 
 # ---------------------------------------------------------------------
 

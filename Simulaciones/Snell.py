@@ -213,8 +213,8 @@ def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones):
     #rayo_refractado.plot_rayo('red', arrow=True)
 
 
-    col1.write(n)
-    col2.write(fronteras)
+    column_0[0].write(n)
+    column_0[1].write(fronteras)
     aux_rayo_incidente = copy.deepcopy(rayo_incidente)
     for i in range (n_medios):
         # Refracciones
@@ -325,15 +325,15 @@ def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones):
 # ----------------------------------------------------------------------------------- SIMULACIÓN --------------------------------------------------------------------------
 
 # Parámetros iniciales
-COL1, COL2 = st.columns(2)
-col1, col2 = COL1.columns(2) 
-n_1 = col1.number_input('Índice de refracción del medio SUPERIOR', 1.,5., value = 1.,format='%.3f')
-n_x = col1.number_input('Índice de refracción del medio INFERIOR', 1.,5., value = 1.2, format='%.3f')
+column = st.columns(2)
+column_0 = column[0].columns(2) 
+n_1 = column_0[0].number_input('Índice de refracción del medio SUPERIOR', 1.,5., value = 1.,format='%.3f')
+n_x = column_0[0].number_input('Índice de refracción del medio INFERIOR', 1.,5., value = 1.2, format='%.3f')
 
-O_1 = col2.slider('Ángulo de incidencia (º)', 0, 90, value=60)
-n_medios = col2.slider('Número de medios', 2,40)
+O_1 = column_0[1].slider('Ángulo de incidencia (º)', 0, 90, value=60)
+n_medios = column_0[1].slider('Número de medios', 2,40)
 n_medios-=1
-COL2.pyplot(simulador_snell(n_1, n_x, O_1, n_medios, False))
+column[1].pyplot(simulador_snell(n_1, n_x, O_1, n_medios, False))
 
 
 
