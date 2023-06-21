@@ -96,6 +96,7 @@ class rayo:
             rayo_reflejado.extremo[0] += np.abs(rayo_reflejado.origen[0]-rayo_reflejado.extremo[0]) *2
         #rayo_reflejado = rayo(origen= self.extremo, longitud=longitud, theta=180-self.theta, sentido=self.sentido)
         rayo_reflejado.medio = self.medio
+        rayo_reflejado.tipo = 'Reflejado' 
         
         return rayo_reflejado
 
@@ -108,6 +109,7 @@ class rayo:
             if self.sentido==-1: rayo_refractado.medio = self.medio+1
             if self.sentido==+1: rayo_refractado.medio = self.medio-1
 
+            rayo_refractado.tipo = 'Refractado' 
             return rayo_refractado
         else: return None
 
@@ -149,22 +151,23 @@ def snell(n_1, n_2, O_1):
     return np.arcsin( n_1/n_2 * np.sin(O_1/180*np.pi) ) * 180/np.pi
 
 
-def incidencia(rayo_incidente, fronteras, n, call, plot_reflexiones, plot_refracciones):
-    if call >=5: return
+def incidencia(rayo_incidente, fronteras, n, n_reflexiones, plot_reflexiones, plot_refracciones, max_reflexiones):
     if rayo_incidente.extremo[0]>1: return
-    print(call)
 
-    #Reflexión
-    if plot_reflexiones or call==0:
-        rayo_reflejado = rayo_incidente.reflejar(longitud=1.5)
-        recurrencia_reflexion = rayo_reflejado.recortar(fronteras, False)
+    if n_reflexiones >=max_reflexiones: pass
+    else:
+        #Reflexión
+        if plot_reflexiones or n_reflexiones==0:
+            if n_reflexiones ==0: rayo_reflejado = rayo_incidente.reflejar(longitud=1.)
+            else: rayo_reflejado = rayo_incidente.reflejar(longitud=1.5)
+            recurrencia_reflexion = rayo_reflejado.recortar(fronteras, False)
 
-        rayo_reflejado.plot_rayo('green', arrow=True)
-        if recurrencia_reflexion:
-            incidencia(rayo_reflejado, fronteras, n, call+1, plot_reflexiones, plot_refracciones)
-    if plot_refracciones==False and call>1: return
+            rayo_reflejado.plot_rayo('green', arrow=True)
+            if recurrencia_reflexion:
+                incidencia(rayo_reflejado, fronteras, n, n_reflexiones+1, plot_reflexiones, plot_refracciones, max_reflexiones)
 
     # Refracción
+    if plot_refracciones==False and n_reflexiones>1: return
     i_medio = rayo_incidente.medio
     if rayo_incidente.sentido==-1:
         if len(n)<=i_medio+1: return
@@ -175,18 +178,23 @@ def incidencia(rayo_incidente, fronteras, n, call, plot_reflexiones, plot_refrac
     if rayo_refractado==None: return # Reflexión Interna Total
 
     recurrencia_refraccion = rayo_refractado.recortar(fronteras, False)
-
     rayo_refractado.plot_rayo('red', arrow=True)
 
     if recurrencia_refraccion:
-        incidencia(rayo_refractado, fronteras, n, 1, plot_reflexiones, plot_refracciones)
+        if rayo_incidente.tipo=='Refractado' or rayo_incidente.tipo=='Incidente' :
+            incidencia(rayo_refractado, fronteras, n, n_reflexiones, plot_reflexiones, plot_refracciones, max_reflexiones)
+        else:
+            incidencia(rayo_refractado, fronteras, n, n_reflexiones+1, plot_reflexiones, plot_refracciones, max_reflexiones)
+        if rayo_incidente.tipo=='Reflejado' and rayo_incidente.sentido==+1:
+            incidencia(rayo_refractado, fronteras, n, n_reflexiones+1, False, plot_refracciones, max_reflexiones)
+
 
     return
 
 
 #Dibujado y ploteo del simulador
 
-def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones, plot_refracciones):
+def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones, plot_refracciones, max_reflexiones):
 
     fig, ax = plt.subplots(figsize=(12,10))
     ax.axis('off')
@@ -217,7 +225,8 @@ def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones, plot_refracciones
     y = +np.cos(np.pi*O_1/180)
 
     rayo_incidente = rayo(origen = [0,0], longitud = longitud_rayos, theta = 180-O_1, sentido=-1) #Creamos el rayo como objeto
-    rayo_incidente.medio = 0    
+    rayo_incidente.medio = 0   
+    rayo_incidente.tipo = 'Incidente' 
     aux = rayo_incidente.extremo
     rayo_incidente.extremo = rayo_incidente.origen
     rayo_incidente.origen = -aux
@@ -226,7 +235,7 @@ def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones, plot_refracciones
     rayo_incidente.plot_rayo('blue', arrow= True)
 
 
-    incidencia(rayo_incidente, fronteras, n, 0, plot_reflexiones, plot_refracciones)
+    incidencia(rayo_incidente, fronteras, n, 1, plot_reflexiones, plot_refracciones, max_reflexiones)
 
     return fig
 
@@ -238,18 +247,26 @@ def simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones, plot_refracciones
 
 n_1 = column_0[0].number_input('Índice de refracción del medio SUPERIOR', 1.,5., value = 1.,format='%.3f')
 n_x = column_0[0].number_input('Índice de refracción del medio INFERIOR', 1.,5., value = 1.2, format='%.3f')
-plot_reflexiones = column_0[0].checkbox('Dibujar Reflexiones Internas')
-plot_refracciones = column_0[0].checkbox('Dibujar Refracciones Internas')
-if plot_reflexiones==False: plot_refracciones=False
+
 
 
 O_1 = column_0[1].slider('Ángulo de incidencia (º)', 0, 90, value=60)
 n_medios = column_0[1].slider('Número de medios', 2,40)
 n_medios-=1
+plot_reflexiones=False
+plot_refracciones=False
+if n_medios+1<=4 and n_medios+1>=2:
+    plot_reflexiones = column_0[0].checkbox('Dibujar Reflexiones Internas', help='Esta opción sólo es eligible para 2, 3 o 4 medios')
+    if plot_reflexiones:
+        plot_refracciones = column_0[0].checkbox('Dibujar Refracciones Internas')
+    if plot_reflexiones==False: plot_refracciones=False
+max_reflexiones=1
+if plot_reflexiones==True:
+    max_reflexiones = column_0[1].number_input('Número de reflexiones internas', min_value=1, max_value=n_medios+1, value=1)
+max_reflexiones+=1
 
-
-
-column[1].pyplot(simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones, plot_refracciones))
+#max_reflexiones = n_medios
+column[1].pyplot(simulador_snell(n_1, n_x, O_1, n_medios, plot_reflexiones, plot_refracciones, max_reflexiones))
 
 
 
