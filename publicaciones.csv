@@ -1,0 +1,8 @@
+Tipo;ruta_pagina;nombre_publico;ruta_imagen
+Artículo;Doppler/Doppler.py;Cómo escuchar la velocidad;ambulancia.png
+Simulación;Doppler/Doppler.py;Efecto Doppler;Doppler.png
+Simulación;Snell/Snell.py;Ley de Snell;Snell.png
+Artículo;Snell/Snell.py;Los fantasmas de la carretera;charco.png
+
+
+
