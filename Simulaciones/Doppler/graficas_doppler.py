@@ -16,6 +16,9 @@ def cos(theta):
 def plot_frame(posiciones, lamina):
     posiciones_ = np.array(posiciones)
     ax.clear()
+    #ax.axis('off')
+    ax.set_xticks([])
+    ax.set_yticks([])
     ax.set_xlim(0, dim_x - 10)
     ax.set_ylim(0, dim_y)
     ax.scatter(posiciones_[:,0], posiciones_[:,1], s=2)
@@ -134,13 +137,14 @@ lamina = lámina(posicion=-5.0, anchura=22.0, altura=dim_y, rango=rango, velocid
 fig, ax = plt.subplots()
 
 # Crea la animación con dos frames
-ani = animation.FuncAnimation(fig, animate, frames=250, interval=50, repeat=False)
+ani = animation.FuncAnimation(fig, animate, frames=100, interval=50, repeat=False)
 # Muestra la animación
 plt.show()
 
 # Guarda la animación
-ani.save('animacion.gif', writer='pillow')
-
+print('Creating animation')
+ani.save('animacion_2.gif', writer='pillow', fps=30)
+print('Animation created')
 # Mostrar en streamlit #
 #import streamlit as st
 #import streamlit.components.v1 as components

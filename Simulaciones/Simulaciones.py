@@ -13,23 +13,11 @@ from streamlit_image_coordinates import streamlit_image_coordinates
 
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 
-st.set_page_config('Divulgación Científica', '💭', 'wide', initial_sidebar_state='expanded')
-
-#add_page_title()
-#show_pages_from_config()
-
-hide_st_style = """
-                <style>
-                #mainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-                </style>
-"""
-st.markdown(hide_st_style, unsafe_allow_html=True)
+import setup_page
+setup_page.setup_page()
 
 #Cargamos los estilos css en la página
 st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
-
 
 #show_pages(
 #    [

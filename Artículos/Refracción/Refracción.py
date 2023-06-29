@@ -13,23 +13,13 @@ import os
 from streamlit_extras.stoggle import stoggle
 
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
-# Configuración ancha de la página
-st.set_page_config(layout='wide')
 
+import setup_page
+setup_page.setup_page()
 
-# Escondemos las masrcas de agua y menú hamburguesa
-hide_st_style = """
-                <style>
-                #mainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-                </style>
-"""
-st.markdown(hide_st_style, unsafe_allow_html=True)
-
-
-
+#Cargamos los estilos css en la página
 st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
+
 
 
 

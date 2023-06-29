@@ -14,23 +14,12 @@ from PIL import Image
 import os
 from streamlit_extras.stoggle import stoggle
 from streamlit_extras.add_vertical_space import add_vertical_space
-
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
-# Configuración ancha de la página
-st.set_page_config(layout='wide')
 
+import setup_page
+setup_page.setup_page()
 
-# Escondemos las masrcas de agua y menú hamburguesa
-#hide_st_style = """
-#                <style>
-#                #mainMenu {visibility: hidden;}
-#                footer {visibility: hidden;}
-#                header {visibility: hidden;}
-#                </style>
-#"""
-#st.markdown(hide_st_style, unsafe_allow_html=True)
-
-
+#Cargamos los estilos css en la página
 st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
 
 
@@ -104,6 +93,8 @@ st.markdown('''Esta definición, así sin más no nos dice nada. Vamos a desmenu
              ''')
 st.markdown('''- **Propiedad del espacio**: Entendemos por espacio todo lo que nos rodea
              ''')
+
+st.image('Galería\GIFs\Compresión del aire.gif')
 
 st.header('El efecto Doppler')
 column = st.columns(2)

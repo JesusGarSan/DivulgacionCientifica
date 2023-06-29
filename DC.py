@@ -10,26 +10,13 @@ from streamlit_image_coordinates import streamlit_image_coordinates
 
 # ---------------------------------------------------------------------
 
-
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 
-st.set_page_config('El Quid', '💭', 'wide', initial_sidebar_state='expanded')
+import setup_page
+setup_page.setup_page()
 
-#add_page_title()
-#show_pages_from_config()
-
-hide_st_style = """
-                <style>
-                #mainMenu {visibility: hidden;}
-                footer {visibility: hidden;}
-                header {visibility: hidden;}
-                </style>
-"""
-st.markdown(hide_st_style, unsafe_allow_html=True)
-
-#Cargamos lso estilos css en la página
+#Cargamos los estilos css en la página
 st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
-
 
 
 
@@ -54,13 +41,16 @@ def init_pages():
         hide_pages(publicacion.nombre_publico)
 
 init_pages()
+
+
+
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
 
-st.markdown(f"""
-            <h1>
-            Divulgación Científica
-            </h1>
-            """, unsafe_allow_html=True)
+#st.markdown(f"""
+#            <h1>
+#            El Quid
+#            </h1>
+#            """, unsafe_allow_html=True)
 
 column = st.columns(2)
 

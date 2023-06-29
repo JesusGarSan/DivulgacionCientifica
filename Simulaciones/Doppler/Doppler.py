@@ -15,37 +15,19 @@ import streamlit.components.v1 as com
 
 from streamlit_toggle import st_toggle_switch
 
+
+
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
-# Configuración ancha de la página
-st.set_page_config(layout='wide')
 
+import setup_page
+setup_page.setup_page()
 
-# Escondemos las masrcas de agua y menú hamburguesa
-#hide_st_style = """
-#                <style>
-#                #mainMenu {visibility: hidden;}
-#                footer {visibility: hidden;}
-#                header {visibility: hidden;}
-#                </style>
-#"""
-#st.markdown(hide_st_style, unsafe_allow_html=True)
-
-
-# Cargamos los estilos css
-#with open('styles.css') as styles:
-#    design = styles.read()
+#Cargamos los estilos css en la página
+st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
 
 from st_pages import Page, Section, show_pages, show_pages_from_config, add_page_title
 
 
-#show_pages(
-#    [
-#        Page("DC.py", "Home", "🏠"),
-#        Page("Artículos/Artículos.py","Artículos", icon="📎"),
-#        Page("Artículos/Refracción/Refracción.py","Los fantasmas de la carretera", icon="🛣️"),
-#        Page("Simulaciones/Snell.py", "Simulaciones", icon="👻"),
-#    ]
-#)
 
 
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------

@@ -3,7 +3,16 @@
 .header {
   overflow: hidden;
   background-color: #B0ECAB;
-  padding: 20px 10px;
+
+
+  position: fixed;
+  z-index: 1000; /* Esto hace que esté encima de todo lo demás*/
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: #000000;
+  padding: 10px;
+
 }
 
 /* Style the header links */
@@ -12,34 +21,47 @@
   color: black;
   text-align: center;
   padding: 12px;
+  margin-left: 5px;
+  margin-right: 5px;
   text-decoration: none;
   font-size: 18px;
   line-height: 25px;
-  border-radius: 4px;
+  border-radius: 15px;
+  border: 2px solid transparent
 }
 
 /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
 .header a.logo {
+  padding: 0px;
+  border: 0px;
   font-size: 25px;
   font-weight: bold;
 }
 
+.header a.logo img {
+  height: 40px; /* Permite que la altura se ajuste proporcionalmente al ancho */
+  width: auto; /* Establece el ancho de la imagen al 100% del contenedor (en este caso, el enlace) */
+  margin-right: 20px
+}
+
 /* Change the background color on mouse-over */
 .header a:hover {
-  background-color: #ddd;
+  /*background-color: #FF4B4B;*/
+  border-color:#FF4B4B;
   color: black;
 }
 
 /* Style the active/current link*/
 .header a.active {
-  background-color: dodgerblue;
-  color: white;
+  border-color:#FF4B4B;
+  color: black;
 }
 
 /* Float the link section to the right */
 .header-right {
-  float: right;
+  float: left;
 }
+
 
 /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
 @media screen and (max-width: 500px) {
