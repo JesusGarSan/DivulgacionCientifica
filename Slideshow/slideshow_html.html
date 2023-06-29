@@ -9,13 +9,13 @@
          img {vertical-align: middle;}
          /* Slideshow container */
          .slideshow-container {
-         max-width: 100%;
+         max-width: 90%;
          position: relative;
          margin: auto;
          }
          .slideshow-image{
         width: 100%; /* Establece el ancho deseado */
-        height: 700px; /* Mantiene la proporción de aspecto original */         
+        height: 600px; /* Mantiene la proporción de aspecto original */         
          }
          /* Caption text */
          .text {
@@ -28,9 +28,20 @@
          text-align: center;
          }
          /* Number text (1/3 etc) */
-        .numbertext {
+         .articulo {
         color: #f2f2f2;
-        background-color: rgba(0, 0, 0, 0.5); /* Cambia el último valor (0.5) para ajustar la transparencia */
+        background-color: rgba(0, 0, 255, 0.5); /* Cambia el último valor (0.5) para ajustar la transparencia */
+        font-size: 32px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        }
+
+        .simulador {
+        color: #f2f2f2;
+        background-color: rgba(255, 0, 0, 0.5); /* Cambia el último valor (0.5) para ajustar la transparencia */
         font-size: 32px;
         padding: 8px 12px;
         position: absolute;
@@ -66,36 +77,36 @@
          .text {font-size: 11px}
          }
 
-            /* Botones de navegación */
-            .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
-            transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-            }
+        /* Botones de navegación */
+        .prev, .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -22px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        }
 
-            /* Posición del botón de navegación izquierdo */
-            .prev {
-            left: 0;
-            }
+        /* Posición del botón de navegación izquierdo */
+        .prev {
+        left: 0;
+        }
 
-            /* Posición del botón de navegación derecho */
-            .next {
-            right: 0;
-            }
+        /* Posición del botón de navegación derecho */
+        .next {
+        right: 0;
+        }
 
-            /* Cambio de color de los botones de navegación al pasar el mouse sobre ellos */
-            .prev:hover, .next:hover {
-            background-color: rgba(255, 0, 0, 0.8);
-            }
+        /* Cambio de color de los botones de navegación al pasar el mouse sobre ellos */
+        .prev:hover, .next:hover {
+        background-color: rgba(255, 0, 0, 0.8);
+        }
 
 
 
@@ -107,20 +118,20 @@
          <a class="next" onclick="plusSlides(1)">&#10095;</a>
          <div class="mySlides fade">
             <a href="Los fantasmas de la carretera">
-                <div class="numbertext">Art&iacute;culo: Los fantasmas de la carretera</div>
+                <div class="articulo">Art&iacute;culo: Los fantasmas de la carretera</div>
                 <img src="https://github.com/JesusGarSan/DivulgacionCientifica/blob/main/Galer%C3%ADa/Im%C3%A1genes/charco.png?raw=true"  class="slideshow-image">
             </a>
 
          </div>
          <div class="mySlides fade">
             <a href="C&oacute;mo escuchar la velocidad">
-                <div class="numbertext">Art&iacute;culo: C&oacute;mo escuchar la velocidad</div>
+                <div class="articulo">Art&iacute;culo: C&oacute;mo escuchar la velocidad</div>
                 <img src="https://github.com/JesusGarSan/DivulgacionCientifica/blob/main/Galer%C3%ADa/Im%C3%A1genes/ambulancia.png?raw=true"  class="slideshow-image">
             </a>
         </div>
         <div class="mySlides fade">
              <a href="Ley de Snell">
-            <div class="numbertext">Simulador: La ley de Snell</div>
+            <div class="simulador">Simulador: La ley de Snell</div>
             <img src="https://github.com/JesusGarSan/DivulgacionCientifica/blob/main/Galer%C3%ADa/Im%C3%A1genes/Snell.png?raw=true" class="slideshow-image">
             </a>
          </div>
