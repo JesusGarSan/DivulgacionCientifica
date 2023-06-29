@@ -50,10 +50,9 @@
   border-color:#FF4B4B;
   color: black;
 }
-
-/* Style the active/current link*/
-.header a.active {
-  border-color:#FF4B4B;
+/*Shows on click*/
+.header a:active { 
+  background-color:#FF4B4B;
   color: black;
 }
 
