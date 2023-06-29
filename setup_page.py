@@ -14,8 +14,8 @@ def setup_page():
 
 
 def show_header():
-    st.markdown('<style>' + open('Header\header_styles.css').read() + '</style>', unsafe_allow_html=True)
-    st.markdown(open('Header\header_html.html').read(), unsafe_allow_html=True)
+    st.markdown('<style>' + open('./Header/header_styles.css').read() + '</style>', unsafe_allow_html=True)
+    st.markdown(open('./Header/header_html.html').read(), unsafe_allow_html=True)
 
 def hide_streamlits():
     hide_st_style = """
