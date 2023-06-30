@@ -178,7 +178,7 @@ nombres=[
     "Art&iacute;culo: Los fantasmas de la carretera",
     "Simulador: Ley de Snell",
     "Art&iacute;culo: Cómo escuchar la velocidad",
-    "El efecto Doppler",
+    "Simulador: El efecto Doppler",
 ]
 clases=[
     "articulo",
