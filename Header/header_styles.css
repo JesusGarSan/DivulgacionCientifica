@@ -71,4 +71,8 @@
   .header-right {
     float: none;
   }
+  .header { 
+   overflow: auto;
+  }
+
 }
