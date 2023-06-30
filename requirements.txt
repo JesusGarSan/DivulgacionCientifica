@@ -2,6 +2,7 @@ matplotlib==3.6.3
 streamlit==1.23.1
 st-pages==0.4.1
 ipython==8.14.0
+streamlit-antd-components==0.1.6
 streamlit-camera-input-live==0.2.0
 streamlit-card==0.0.5
 streamlit-cropper==0.2.1
