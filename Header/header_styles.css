@@ -1,9 +1,8 @@
         
         /* Style the header with a grey background and some padding */
 .header {
-  overflow: hidden;
+  overflow: auto;
   background-color: #B0ECAB;
-
 
   position: fixed;
   z-index: 1000; /* Esto hace que esté encima de todo lo demás*/
