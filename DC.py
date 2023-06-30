@@ -178,21 +178,25 @@ nombres=[
     "Art&iacute;culo: Los fantasmas de la carretera",
     "Simulador: Ley de Snell",
     "Art&iacute;culo: Cómo escuchar la velocidad",
+    "El efecto Doppler",
 ]
 clases=[
     "articulo",
     "simulador",
     "articulo",
+    "simulador",
 ]
 hrefs=[
     '"Los fantasmas de la carretera"',
     '"Ley de Snell"',
     '"Cómo escuchar la velocidad"',
+    '"Efecto Doppler"',
 ]
 srcs=[
     "https://github.com/JesusGarSan/DivulgacionCientifica/blob/main/Galer%C3%ADa/Im%C3%A1genes/charco.png?raw=true",
     "https://github.com/JesusGarSan/DivulgacionCientifica/blob/main/Galer%C3%ADa/Im%C3%A1genes/Snell.png?raw=true",
     "https://github.com/JesusGarSan/DivulgacionCientifica/blob/main/Galer%C3%ADa/Im%C3%A1genes/ambulancia.png?raw=true",
+    "https://github.com/JesusGarSan/DivulgacionCientifica/blob/main/Galer%C3%ADa/Im%C3%A1genes/Doppler.png?raw=true",
 ]
 
 if 'counter' not in st.session_state:
@@ -210,6 +214,7 @@ with cols[1]:
         ButtonsItem('1'),
         ButtonsItem('2'),
         ButtonsItem('3'),
+        ButtonsItem('4'),
         ButtonsItem(icon='chevron-right'),
         #ButtonsItem(icon='chevron-bar-right'),
     ], align='center', return_index=True, grow=False, index = None)
