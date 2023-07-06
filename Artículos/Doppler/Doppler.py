@@ -232,11 +232,11 @@ with column[1]:
         parametros['velocidad_emisor'] = 0.0
         parametros['posicion_inicial_emisor_x'] = 0.0
     if index == 1:
-        parametros['velocidad_emisor'] = 5.0
-        parametros['posicion_inicial_emisor_x'] = -3.0
+        parametros['velocidad_emisor'] = 15.0
+        parametros['posicion_inicial_emisor_x'] = -10.0
         parametros['posicion_inicial_receptor_x'] = 0.0
     if index == 2:
-        parametros['velocidad_emisor'] = 20.0
+        parametros['velocidad_emisor'] = 25.0
         parametros['posicion_inicial_emisor_x'] = -15.0
         parametros['posicion_inicial_receptor_x'] = 0.0
 
