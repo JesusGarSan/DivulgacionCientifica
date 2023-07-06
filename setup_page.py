@@ -6,8 +6,9 @@ def setup_page():
 
 
     st.set_page_config('El Quid', '💭', 'wide', initial_sidebar_state='collapsed')
-    
     #add_page_title()
+
+    # Comentamos las siguientes líneas durante el desarrollo
     hide_streamlits()
     show_header()
 

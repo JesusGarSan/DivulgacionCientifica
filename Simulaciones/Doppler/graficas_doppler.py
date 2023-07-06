@@ -13,138 +13,212 @@ def sin(theta):
 def cos(theta):
     return np.cos(theta*np.pi/180)
 
-def plot_frame(posiciones, lamina):
-    posiciones_ = np.array(posiciones)
+def approx(value1, value2, precision = 0.01): #Devuleve si el valor es aproximadamente igual a otro o no
+    if np.abs(value1 - value2) <=0.01: return True
+    else: return False
+
+def plot_frame(posiciones, lamina, concentraciones):
+    #posiciones_ = np.array(posiciones)
     ax.clear()
     #ax.axis('off')
-    ax.set_xticks([])
-    ax.set_yticks([])
-    ax.set_xlim(0, dim_x - 10)
+    #ax.set_xticks([])
+    #ax.set_yticks([])
+    ax.set_xlim(-dim_x/2, dim_x/2)
     ax.set_ylim(0, dim_y)
-    ax.scatter(posiciones_[:,0], posiciones_[:,1], s=2)
-    ax.add_patch(Rectangle((lamina.posicion-lamina.anchura/2, 0), lamina.anchura, lamina.altura, facecolor='gray'))
+    ax.add_patch(Rectangle((lamina.posicion-lamina.anchura, 0), lamina.anchura*2, lamina.altura, facecolor='gray'))
+    ax.scatter(posiciones_[:,0], posiciones_[:,1], s=4)
+    ax.scatter(posiciones_[490:500,0], posiciones_[490:500,1], s=14, c='red') # Coloreamos un punto arbitrario rojo
+    ax.vlines(lamina.posicion, 0,100, colors='black')
+    ax.vlines(lamina.extremos[1], 0,100, colors='red')
+
+    #ax[1].clear()
+    #ax[1].set_xlim(0, dim_x)
+    #ax[1].set_ylim(0, dim_y)
+    #ax[1].plot(concentraciones)
+
+
     plt.show()
 
 def animate(frame):
-    lamina.mover()
+    time_interval = 1e-5 # Cada frame equivale a 1 micro segundo
+    time = frame * time_interval
+    lamina.mover(time)
+
     posiciones = []
+    concentraciones = [0]*300
+    prev_particulas = particulas
     for particula in particulas:
         particula.mover(lamina)
         posiciones.append(particula.posicion)
+        particula.time += time_interval
+
     
-    plot_frame(posiciones, lamina)
+    import copy
+    temp_lamina = copy.deepcopy(lamina)
+    temp_lamina.mover(frame)
+
+    plot_frame(posiciones, lamina, concentraciones)
 
 
+def random_grid(n_points, dim_x = 100, dim_y = 100):
+    points = []
+    for _ in np.arange(n_points):
+        x = np.random.rand(1) * dim_x
+        y = np.random.rand(1) * dim_y
+        points.append([x,y])
+
+    return np.array(points)
 
 #------------------------------------- DEFINICIÓN DE CLASES ------------------------------------
 
 # Clase lámina 
 class lámina:
-    def __init__(self, posicion, anchura, altura, rango, velocidad):
+    def __init__(self, posicion, anchura, altura, amplitud, frecuencia, desfase):
         self.posicion = posicion
         self.anchura = anchura
         self.altura = altura
-        self.rango = rango
-        self.velocidad = velocidad
+        self.extremos = [posicion - anchura, posicion + anchura]
 
-    def mover(self):
-        if self.posicion <= self.rango and self.posicion >= -self.rango:    
-            self.posicion += self.velocidad
-        else:
-            self.velocidad *=-1
-            self.posicion += self.velocidad
+        self.amplitud = amplitud
+        self.frecuencia = frecuencia
+        self.periodo = 1/frecuencia
+        self.desfase = desfase # En radianes!!
+
+    def x(self, t):
+        A = self.amplitud
+        w = 2* np.pi / self.periodo
+        phi = self.desfase
+
+        x = self.posicion + A * np.cos(w*t + phi)
+
+        return x
+
+    def mover(self, time):
+        self.posicion = self.x(time)
+        self.extremos = [self.posicion - self.anchura, self.posicion + self.anchura]
+        
+
 
 # Clase partícula 
 class particle:
-    def __init__(self, posicion, angulo, velocidad):
+    def __init__(self, posicion, angulo, velocidad, amplitud, frecuencia, desfase):
         self.posicion = np.array(posicion)*1.0
+        self.posicion_inicial = self.posicion
         self.angulo = angulo
         self.direccion = np.array([cos(angulo), sin(angulo)])#.T[0]
+        self.direccion[1] = 0 # CORRECIÓN TEMPORAL HASTA Q DECIDA Q HCAER CON LOS REBOTES
         self.velocidad = velocidad
         self.libre = True
 
+        self.MAS = False
+        self.amplitud = amplitud
+        self.frecuencia = frecuencia
+        self.periodo = 1/frecuencia
+        self.desfase = desfase # En radianes!!
+        self.time =0
+
+    def x(self, t):
+        A = self.amplitud
+        w = 2* np.pi / self.periodo
+        phi = self.desfase
+
+        if self.MAS == True:
+            x = self.posicion_inicial[0] + A * np.cos(w*self.time + phi)
+        else:
+            x = self.posicion[0]
+
+        aux = w*t + phi / 2*np.pi
+        if approx(aux, int(aux), 1): self.MAS = False
+            
+        return x
+
     def mover(self, lamina):
-        nueva_posicion = self.posicion + self.direccion*self.velocidad#.T[0]
-        extremo_lamina = lamina.posicion + lamina.anchura/2
+        if self.MAS ==True:
+            self.posicion[0] = self.x(self.time) + self.direccion[0]*self.velocidad
+            self.posicion[1] += self.direccion[1] * self.velocidad
 
-        # Choque contra la lámina vibrante
-        if nueva_posicion[0] <= extremo_lamina and lamina.velocidad >= 0 and self.libre==True:
-            
-            # Método de "empujar las partículas"
-            #self.velocidad = lamina.velocidad
-            #self.angulo = 0
-            #self.direccion = np.array([1, 0]).T 
-            #self.posicion += self.direccion*self.velocidad
-            
-            # Método de "clonar las partículas". Usamos este para evitar que la lámina se quede sin nada que empujar
-            self.libre = False
-            nueva_particula = particle(self.posicion, 0, lamina.velocidad)
-            nueva_particula.libre = False
+        elif self.MAS==False:
+           #Comprobamos si hay alguna partícula de aprox el mismo valor de x que la particula actual para iniciar su MAS
+            for objeto in prev_particulas:
+                if objeto.posicion[0]  <= self.posicion[0] and objeto.posicion[0]+ .5 > self.posicion[0] and objeto.MAS == True and objeto.desfase + objeto.frecuencia*2*np.pi*self.time > np.pi:
+                    self.time = 0
+                    self.posicion_inicial = self.posicion
+                    self.MAS = True
+                    self.desfase = 0
+                    break
 
-            particulas.append(nueva_particula)
-        # Desplazamiento normal
-        elif nueva_posicion[0] < dim_x and nueva_posicion[0]>0 and nueva_posicion[1] < dim_y and nueva_posicion[1] > 0:
-            self.posicion[0]+= self.direccion[0]*self.velocidad
-            self.posicion[1]+= self.direccion[1]*self.velocidad
-
-        # Choque contra las paredes
-        else: self.rebotar()
-
-        if lamina.velocidad < 0: self.libre = True
+        if self.posicion[0] <= lamina.extremos[1]:
+            self.posicion[0] = np.clip(self.posicion[0], lamina.extremos[1], dim_x/2)
+            self.desfase = np.pi
+            self.MAS = True
 
     def rebotar(self):
-        if self.posicion[0]<=0 :#or self.posicion[0]>=dim_x: # Rebote con la vertical
-            self.angulo = + 180 - self.angulo
-        elif self.posicion[1]<=0 or self.posicion[1]>=dim_y:
+        #if self.posicion[0]<=-dim_x/2 :#or self.posicion[0]>=dim_x/2: # Rebote con la vertical
+        #    self.angulo = + 180 - self.angulo
+        if self.posicion[1]<=0 or self.posicion[1] >= dim_y:
             self.angulo = - self.angulo
 
         self.direccion = np.array([cos(self.angulo), sin(self.angulo)])#.T[0]
         self.posicion += self.direccion*self.velocidad#.T[0]
 
-        self.posicion[0] = np.clip(self.posicion[0], 0.0, dim_x)
+        # self.posicion[0] = np.clip(self.posicion[0], -dim_x/2, dim_x/2)
         self.posicion[1] = np.clip(self.posicion[1], 0.0, dim_y)
         
 
-
-
-
 #-------------------------------------
 
-np.random.seed(1)
+np.random.seed(2)
 
 global dim_x, dim_y
 
 dim_x = 300
 dim_y = 50
-densidad = 50.0
-rango = 10
+densidad = 5.0
+anchura = 4.0
+
+posiciones = random_grid(100, dim_x, dim_y)
+
 particulas = []
 posiciones = []
 
-for x in range(dim_x)[:]:
-    for y in range(dim_y):
-        if np.random.rand(1)*100 <= densidad:
-            angulo = np.random.rand(1)[0]*360
-            velocidad = np.random.rand(1)[0]*0.1+0.1
-            particulas.append(particle([x,y], angulo, velocidad))
+amplitud = 3
+frecuencia = 1000
+desfase = 0
 
-            posiciones.append([x,y])
+lamina = lámina(-150 + anchura, anchura, dim_y, amplitud, frecuencia, desfase)
 
-#particulas = [particle([50.0,30.0], 160.0, 1.0)]
-lamina = lámina(posicion=-5.0, anchura=22.0, altura=dim_y, rango=rango, velocidad=2.0)
 
+#for x in range(-dim_x//2, dim_x//2)[:]:
+#    #if x > lamina.posicion and x < lamina.posicion+lamina.anchura: continue
+#    for y in range(dim_y):
+#        if np.random.rand(1)*100 <= densidad:
+#            angulo = np.random.rand(1)[0]*360
+#            velocidad = np.random.rand(1)[0]*0.05+0.05
+#            velocidad = 0
+#            #angulo = 180.0
+#            #velocidad = + 0.5
+#            nueva_particula = particle([x,y], angulo, velocidad, amplitud, frecuencia, desfase)
+#
+#            particulas.append(nueva_particula)
+#            posiciones.append([x,y])
+#
+#print(len(posiciones))
+
+prev_particulas = particulas
 # Crea la figura y el objeto de ejes
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(1, figsize=(15,5))
+fig.set_size_inches(10,5, forward=True)
 
 # Crea la animación con dos frames
-ani = animation.FuncAnimation(fig, animate, frames=100, interval=50, repeat=False)
+ani = animation.FuncAnimation(fig, animate, frames=300, interval=100, repeat=False)
 # Muestra la animación
 plt.show()
 
 # Guarda la animación
 print('Creating animation')
-ani.save('animacion_2.gif', writer='pillow', fps=30)
+ani.save('./Simulaciones/Doppler/animacion_onda.gif', writer='pillow', fps=15)
 print('Animation created')
+
 # Mostrar en streamlit #
 #import streamlit as st
 #import streamlit.components.v1 as components

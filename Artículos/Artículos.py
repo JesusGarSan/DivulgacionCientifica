@@ -28,6 +28,7 @@ for index, publicacion in publicaciones.iterrows():
     hide_pages(publicacion.nombre_publico)
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
 
+st.markdown('<h1>  </h1>', unsafe_allow_html=True)
 
 column = st.columns(2)
 

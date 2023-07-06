@@ -58,13 +58,13 @@ def show_carrusel(hrefs, clase, nombres, srcs, counter):
          img {vertical-align: middle;}
          /* Slideshow container */
          .slideshow-container {
-         max-width: 100%;
+         max-width: 80%;
          position: relative;
          margin: auto;
          }
          .slideshow-image{
          width: 100%; /* Establece el ancho deseado */
-         height: 600px; /* Mantiene la proporción de aspecto original */         
+         height: 500px; /* Mantiene la proporción de aspecto original */         
          }
          /* Caption text */
          .text {
@@ -156,8 +156,8 @@ def show_carrusel(hrefs, clase, nombres, srcs, counter):
       <div class="slideshow-container">
          <div class="mySlides fade">
             <a href={hrefs[counter]} target="_self">
-               <div class="{clase[counter]}">{nombres[counter]}</div>
                <img src={srcs[counter]} class="slideshow-image">
+               <div class="{clase[counter]}">{nombres[counter]}</div>
             </a>
          </div>
       </div>
@@ -178,7 +178,7 @@ nombres=[
     "Art&iacute;culo: Los fantasmas de la carretera",
     "Simulador: Ley de Snell",
     "Art&iacute;culo: Cómo escuchar la velocidad",
-    "Simulador: El efecto Doppler",
+    "El efecto Doppler",
 ]
 clases=[
     "articulo",
@@ -246,7 +246,6 @@ if selection == None: # Sólo si no se ha pinchado ya para moverse
 
     st.session_state.counter = counter
     st.experimental_rerun()
-
 
 
 
