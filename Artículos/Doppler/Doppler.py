@@ -12,6 +12,8 @@ import streamlit.components.v1 as com
 from PIL import Image
 
 import os
+
+from streamlit_extras.switch_page_button import switch_page
 from streamlit_extras.stoggle import stoggle
 from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_antd_components import *
@@ -52,14 +54,14 @@ st.markdown(f"""
 column = st.columns(2)
 
 column[0].markdown(r'''
-_Estás a punto de cruzar la calle cuando escuchas una sirena acercándose. Te giras y ves que se trata de una ambulancia. Te detienes para dejarle pasar.
+_Estás a punto de cruzar la calle cuando escuchas una sirena acercándose. Te giras y ves que se trata de una ambulancia. Te detienes para dejarla pasar.
 Entonces te asalta una pregunta: **¿qué le ha pasado a la sirena?**. Podrías jurar que se escuchaba distinta cuando la ambulancia se acercaba..._.
 ''')
 
 column[0].markdown(r'''
 Gracias a nuestro oído no es difícil saber cuando un coche se nos acerca. Lo escuchamos cada vez más intensamente cuando se nos acerca, y cada vez más levemente cuando se aleja.
 Pero **el volumen no es la única forma de saber si algo se acerca o se aleja**.
-Aun si crees no saber cuál es esta otra forma, es muy probable que incoscientemente la conozcas. ¿Lo comprobamos?
+Aun si crees no saber otra forma, es muy probable que incoscientemente la conozcas. ¿Lo comprobamos?
 
 ''')
 
@@ -105,8 +107,8 @@ Resulta que:
 column = st.columns([.6, .4])
 #column[1].image('Galería\GIFs\Doppler_1.gif')
 column[0].markdown(r'''
-- Cuando un **emisor** de sonido se nos :blue[**_acerca_**]  oímos el sonido que emite más :blue[**_agudo_**] que si estuviese quieto.
-- Cuando un **emisor** de sonido se nos :red[**_aleja_**] oímos el sonido que emite más :red[**_grave_**] que si estuviese quieto.
+- Cuando un **emisor** de sonido se nos :blue[**acerca**]  oímos el sonido que emite más :blue[**agudo**] que si estuviese quieto.
+- Cuando un **emisor** de sonido se nos :red[**aleja**] oímos el sonido que emite más :red[**grave**] que si estuviese quieto.
 
 Además:
 
@@ -140,10 +142,15 @@ Cuando un objeto vibra se mueve de un lado a otro dentro de un rango de distanci
 Llamamos **oscilación** a cada uno de los movimientos de ida y vuelta de las vibraciones.
 
 En cada oscilación, el objeto vibrante alterna "abalanzarse" contra las partículas de aire y "alejarse" de ellas.
-Al abalanzarse empuja las partículas de aire, haciendo que se compriman, mientras que al alejarse hace que se separen entre sí.
+Al abalanzarse empuja las partículas de aire, haciendo que se **compriman**, mientras que al alejarse hace que se separen entre sí.
 Esta intermitencia de "empujones" provoca que las partículas de aire que toca el objeto empiecen también a oscilar.
-Las partículas de aire oscilantes empujan su vez a las partículas de aire cercanas a ellas, comprimiéndolas intermitentemente y haciendo que la oscilación se transmita a lo largo del aire.
+Las partículas de aire oscilantes empujan su vez a las partículas de aire cercanas a ellas, **comprimiéndolas intermitentemente y haciendo que la oscilación se transmita a lo largo del aire**.
 ''')
+
+column = st.columns(3)
+column[0].markdown('*Animación de particulas de aire viajando libremente*')
+column[1].markdown('*Lámina vibrando en el vacío*')
+column[2].markdown('*Lámina vibrando en el aire y propagando la vibración*')
 
 with st.expander('Un detalle clave: **oscilar** _vs._ **desplazar**'):
     column = st.columns(2)
@@ -156,10 +163,7 @@ with st.expander('Un detalle clave: **oscilar** _vs._ **desplazar**'):
 
     column[0].markdown("""Dicho de otra manera: Cuando una escuchamos a una persona hablar *el aire que sale de su boca NO está llegando a nuestro oído.""")
 
-column = st.columns(3)
-column[0].markdown('Animación de particulas de aire viajando libremente')
-column[1].markdown('Lámina vibrando en el vacío')
-column[2].markdown('Lámina vibrando en el aire y propagando la vibración')
+
 
 st.markdown(r'''
 Nuestro oído es capaz de detectar las compresiones de aire que llegan hasta él, dándonos la habilidad de oir.
@@ -183,8 +187,8 @@ Los sonidos de baja frecuencia son **:red[graves]**.
 
 ''')
 
-column[1].write('ejemplo frecuencia alta')
-column[1].write('ejemplo frecuencia baja')
+column[1].write('*ejemplo frecuencia alta*')
+column[1].write('*ejemplo frecuencia baja*')
 
 st.divider()
 
@@ -240,7 +244,8 @@ with column[1]:
         parametros['posicion_inicial_emisor_x'] = -15.0
         parametros['posicion_inicial_receptor_x'] = 0.0
 
-    parametros['velocidad_emisor'] = st.number_input('Velocidad emisor (m/s)', value= float(parametros['velocidad_emisor']), min_value=-100.0, max_value=+100.0, step= 1.0)
+    parametros['velocidad_emisor'] = st.number_input('Velocidad emisor (m/s)', value= float(parametros['velocidad_emisor']), min_value=-100.0, max_value=+100.0, step= 1.0,
+                                    help='Para ayudar a la visualización esta simulación considera una velocidad del sonido de 34 m/s (reducción de factor 10 respecto al valor real).')
     parametros['velocidad_emisor'] *= escala
 column[0].markdown(r'''
 Ahora que comprendemos mejor la naturaleza del sonido y qué es la frecuencia tenemos todas las piezas para comprender el Efecto Doppler.
@@ -287,17 +292,18 @@ st.divider()
 
 st.header('Para saber más')
 
-column = st.columns(3)
+column = st.columns(2)
 with column[0].expander('**¿Y si es el receptor el que se mueve?**'):
     st.markdown(r'''
     El **efecto Doppler** no sólo sucede cuando el emisor de sonido se mueve. También **se manifiesta cuando el receptor se mueve**.
     - Si el receptor se **:blue[acerca]** al emisor, se encontrará con más compresiones cada segundo, **:blue[aumentando la frecuencia]**.
     - Si el receptor se **:red[aleja]** del emisor, se encontrará con menos compresiones cada segundo, **:red[reduciendo la frecuencia]**.
 
+    Si tanto el receptor como el emisor se mueven, **ambos movimientos contribuyen al efecto**.
     
     ''')
 
-with column[1].expander('**Cómo calcular el efecto Doppler**'):
+with column[0].expander('**Cómo calcular el efecto Doppler**'):
     st.markdown(r'''
     Podemos calcular la frecuencia a la que "se oye" un sonido afectado por el efecto Doppler mediante la siguiente ecuación:
     ''')
@@ -306,19 +312,56 @@ with column[1].expander('**Cómo calcular el efecto Doppler**'):
     ''')
 
     st.markdown(r'''
-    
+    Donde:                                      
+    $f_{r}$ es la frecuencia del sonido recibido            
+    $f_{e}$ es la frecuencia del sonido emitido             
+    $v$ es la velocidad del sonido              
+    $v_r$ es la velocidad del receptor (>0 si se aleja del emisor)   
+    $v_e$ es la velocidad del emisor (>0 si se acerca al receptor)
     ''')
 
 
-with column[2].expander('**Las ondas de choque**'):
-    st.markdown('aaa')
+with column[1].expander('**Las ondas de choque**'):
+    st.markdown(r'''
+    Si la fuente emisora es igual de rápida que el propio sonido se produce el fenómeno de las ondas de choque.
+    Cuando esto sucede, cada una de las nuevas emisiones de la fuente se suma a las anteriores, haciendo que todas las emisiones viajen juntas como una enorme compresión del aire.
+    ''')
+    parametros['velocidad_emisor'] = parametros['velocidad_sonido']
+    parametros['posicion_inicial_emisor_x'] = -20.0
+    parametros['posicion_inicial_receptor_x'] = 50.0
+    st.image('Artículos/Doppler/onda choque.gif')
+    st.markdown(r'''
+    Es difícill mantener _exactamente_ la misma velocidad que el sonido, por lo que este fenómeno suele observarse en aviones capaces de **superar** la velocidad del sonido en el instante en el que la igualan.
+    Esto es lo que comunmente se llama **"Romper la barrera del sonido"**.
+                
+    Cuando la velocidad del emisor es **superior** a la del sonido, las compresiones del aire se suman formando un cono. La compresión en este cono (suma de compresiones de cada vibración) puede hacerse muy grande.
+                ¡Tanto como para **provocar la condensación del vapor de agua** que se encuentra!, creando así nubes con forma de cono:
+    
+                ''')
+    columns = st.columns([0.66, 0.34])
+    columns[0].image('Artículos/Doppler/onda supersónica.gif')
+    columns[1].image('Galería/Imágenes/avión match.jpg', use_column_width=True)
 
 #--------------------------------------------------------------------------------------------------------
 
 st.header('Juega con el Efecto Doppler')
 
+column = st.columns(2)
+column[0].markdown(r'''
+Entre los simuladores de la web podrás encontrar uno dedicado al Efecto Doppler.
+Además de poder crear tus propias animaciones **podrás subir tus propios audios para simular cómo se escucharían al someterse al efecto Doppler**.
+Pásate a jugar con él: 
+''')
 
-
+#img = Image.open("Galería/Imágenes/" + 'Doppler.png')
+#img = img.resize((600,300))
+#column[1].image(img, use_column_width=True )
+#
+#with column[1]:
+#    add_vertical_space(2)
+last_coordinates=None
+if column[(index+1)%2].button('Simulador: Efecto Doppler', use_container_width=True) or last_coordinates!=None:
+    switch_page('Efecto Doppler')
 
 
 
