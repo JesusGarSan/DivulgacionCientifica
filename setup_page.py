@@ -5,7 +5,7 @@ from st_pages import Page, Section, show_pages, show_pages_from_config, add_page
 def setup_page():
 
 
-    st.set_page_config('El Quid', '💭', 'wide', initial_sidebar_state='collapsed')
+    st.set_page_config('El Quid', '🔍', 'wide', initial_sidebar_state='collapsed')
     #add_page_title()
 
     # Comentamos las siguientes líneas durante el desarrollo
