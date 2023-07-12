@@ -14,8 +14,8 @@ import streamlit.components.v1 as com
 import os
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 
-#import setup_page
-#setup_page.setup_page()
+import setup_page
+setup_page.setup_page()
 
 
 
@@ -122,7 +122,6 @@ def crear_animación(params):
     
 
 
-#st.set_page_config(layout='wide')
 column = st.columns(2)
 
 with column[0]:
