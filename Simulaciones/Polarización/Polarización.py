@@ -135,6 +135,5 @@ n_ondas = n_inicial_ondas
 lines = []
 
 with column[1]:
-    print(polarizar)
-    params = [amplitud, 0, polarizar , desfasar, 0, pos_camara, vel_camara ] 
+    params = [n_inicial_ondas, amplitud, 0, polarizar , desfasar, 0, pos_camara, vel_camara ] 
     crear_animación(params)
