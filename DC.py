@@ -33,6 +33,8 @@ def init_pages():
             Page("Simulaciones/Snell/Snell.py", "Ley de Snell", icon="〽️"),
             Page("Simulaciones/Doppler/Doppler.py", "Efecto Doppler", icon="🎯"),
             Page("Simulaciones/Polarización/Polarización.py", "Polarización de la luz", icon=":lightbulb:"),
+            # Sugerencias
+            Page('Sugerencias/sugerencias.py', 'Sugerencias')
         ]
     )
 
@@ -257,19 +259,6 @@ if selection == None: # Sólo si no se ha pinchado ya para moverse
 #from streamlit.components.v1 import html, declare_component
 #slideshow = open('./Slideshow/slideshow_html.html').read()
 #html(slideshow, height=700)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #st.markdown(open('./Slideshow/chat.html').read(), unsafe_allow_html=True)
