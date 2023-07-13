@@ -329,7 +329,7 @@ with column[1].expander('**Las ondas de choque**'):
     parametros['velocidad_emisor'] = parametros['velocidad_sonido']
     parametros['posicion_inicial_emisor_x'] = -20.0
     parametros['posicion_inicial_receptor_x'] = 50.0
-    st.image('Artículos/Doppler/onda choque.gif')
+    st.image('Galería/GIFs/onda choque.gif')
     st.markdown(r'''
     Es difícill mantener _exactamente_ la misma velocidad que el sonido, por lo que este fenómeno suele observarse en aviones capaces de **superar** la velocidad del sonido en el instante en el que la igualan.
     Esto es lo que comunmente se llama **"Romper la barrera del sonido"**.
@@ -339,7 +339,7 @@ with column[1].expander('**Las ondas de choque**'):
     
                 ''')
     columns = st.columns([0.66, 0.34])
-    columns[0].image('Artículos/Doppler/onda supersónica.gif')
+    columns[0].image('Galería/GIFs/onda supersónica.gif')
     columns[1].image('Galería/Imágenes/avión match.jpg', use_column_width=True)
 
 #--------------------------------------------------------------------------------------------------------
