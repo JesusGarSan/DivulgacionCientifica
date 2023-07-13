@@ -1,54 +1,26 @@
-
 import streamlit as st
-import numpy as np
-from PIL import Image
+from pathlib import Path
 
-import setup_page
-setup_page.setup_page()
+st.header('Contacto')
 
 
-st.header('¡Envíanos tus preguntas!')
-st.markdown('¿Hay algo de tu día a día que te llame la atención pero no entiendas?')
-st.markdown('¿Te gustaría una explicación de algún fenómeno en concreto?')
-st.markdown('¿Tienes alguna idea o sugerencia?')
-st.markdown('¡Escríbenos!')
+contact_form="""
+<form action="https://formsubmit.co/the.quid.es@gmail.com" method="POST">
+     <input type="hidden" name="_template" value="table">
+     <input type="hidden" name="_autoresponse" value="¡Gracias por ponerte en contacto con nosotros! A continuación puedes encontrar una copia de tu mensaje:">
+     <input type="hidden" name="_captcha" value="false">
+     <input type="text" name="name" placeholder="Tu nombre" required>
+     <input type="email" name="email" placeholder="Tu e-mail" required>
+     <textarea name="message" placeholder="Indícanos tu Sugerencia o Pregunta"></textarea>
+     <button type="submit">Enviar</button>
+</form>
+"""
+
+st.markdown(contact_form, unsafe_allow_html=True)
+
+def local_css(file_name):
+    with open(file_name) as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 
-
-if 'messages' not in st.session_state:
-    st.session_state.messages = []
-
-if 'images' not in st.session_state:
-    st.session_state.images = []
-
-
-image = st.file_uploader('Adjunta imagen ilustrativa', )
-if image != None:
-    st.session_state.messages.append(image)
-    image= None
-
-
-
-input = st.chat_input('Escribe tu pregunta aquí')
-if input != None:
-    st.session_state.messages.append(input)
-    messages = st.session_state.messages
-    with st.chat_message(name='user', avatar='❓'):
-        for message in messages:
-            if type(message) == str: st.markdown(message)
-
-
-messages = st.session_state.messages
-import os
-if len(messages)> 0:
-    try: os.mkdir('Sugerencias/user')
-    except: pass
-    f = open('Sugerencias/user/sugerencias.txt', 'w')
-    for message in messages:
-        if type(message) == str: f.write(message + '\n')
-        else: 
-            img = Image.open(message)
-            img.save(f'Sugerencias/user/{message.name}')
-    
-    f.close()
-
+local_css("./Sugerencias/styles/styles.css")
