@@ -159,7 +159,7 @@ with st.expander('Un detalle clave: **oscilar** _vs._ **desplazar**'):
     Lo que se propaga son las propias oscilaciones. Cada una de las partículas de aire involucradas oscilan entorno a un mismo punto, no viajan del objeto a nuestro oído
     Fíjate en las partículas resaltadas de :red[rojo] en la siguiente animación:
     """)
-    column[1].image('animacion_onda.gif')
+    column[1].image('./Galería/GIFs/animacion_onda.gif')
 
     column[0].markdown("""Dicho de otra manera: Cuando una escuchamos a una persona hablar *el aire que sale de su boca NO está llegando a nuestro oído.""")
 
