@@ -2,10 +2,10 @@ import streamlit as st
 from st_pages import Page, Section, show_pages, show_pages_from_config, add_page_title, hide_pages
 
 
-def setup_page():
+def setup_page(width='wide'):
 
 
-    st.set_page_config('El Quid', '🔍', 'wide', initial_sidebar_state='collapsed')
+    st.set_page_config('El Quid', '🔍', width, initial_sidebar_state='collapsed')
     #add_page_title()
 
     # Comentamos las siguientes líneas durante el desarrollo

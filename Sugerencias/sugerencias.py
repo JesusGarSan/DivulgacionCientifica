@@ -1,8 +1,10 @@
 import streamlit as st
 from pathlib import Path
 
-st.header('Contacto')
+import setup_page
+setup_page.setup_page('centered')
 
+st.header('Contacto')
 
 contact_form="""
 <form action="https://formsubmit.co/the.quid.es@gmail.com" method="POST">
