@@ -2,7 +2,7 @@ import streamlit as st
 from pathlib import Path
 
 import setup_page
-setup_page.setup_page('centered', local_css="./Sugerencias/styles/styles.css")
+setup_page.setup_page('centered', local_css="./Sugerencias/styles/styles_sugerencias.css")
 
 st.title(':mailbox_with_mail: Buzón de sugerencias')
 
