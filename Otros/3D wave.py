@@ -12,12 +12,12 @@ ax = plt.axes(projection = '3d')
 # Creating array points using numpy
 
 
-n_inicial_ondas = 15 # Número de ondas que componen la señal
+n_inicial_ondas = 0 # Número de ondas que componen la señal
 polarizar = False # Aplicar polarizador vertical
 desfasar = True # True para el caso de luz natural
 desfases = np.random.rand(n_inicial_ondas) * 2*np.pi /5
 rotar = 0 #nº de grados a rotar por cada frame
-incremento_ondas = 0 #nº de frames tras los cuales se añade una onda (0 para no aplicar incremento). Hace desfasar = False
+incremento_ondas = 20 #nº de frames tras los cuales se añade una onda (0 para no aplicar incremento). Hace desfasar = False
 
 n_ondas = n_inicial_ondas
 lines = []

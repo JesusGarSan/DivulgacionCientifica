@@ -51,7 +51,7 @@ def Doppler_audio(input_file, output_file, delta_f, v_e=0, c=340):
     # Alterar la frecuencia
 
     rate = (1-v_e/c)
-    print(rate)
+    #print(rate)
     if rate < 0:
         audio_data_alterado = np.flipud(audio_data) # Usamos esto para invertir temporalmente el audio. Lo usamos si la velocidad supera a la del sonido en le medio
         audio_data_alterado = librosa.effects.pitch_shift(audio_data, sr=sample_rate, n_steps=int(-delta_f/100))
@@ -63,7 +63,7 @@ def Doppler_audio(input_file, output_file, delta_f, v_e=0, c=340):
     # Crear archivo de audio con la frecuencia alterada
     sf.write(output_file, audio_data_alterado, sample_rate)
 
-@st.cache_data
+@st.cache_data(show_spinner=False)
 def crear_animación(parametros, dim_x, dim_y, escala_figura=.28, height = 600, width = 1000):
 
     # Crear la figura y los ejes
@@ -249,7 +249,8 @@ def audio_to_Doppler(f_receptor, f_emisor, v_e=0, c=340):
         delta_f = f_receptor-f_emisor  # Frecuencia a aumentar en Hz
 
         with column[1]:
-            Doppler_audio(input_file, output_file, delta_f, v_e, c)
+            with st.spinner('Alterando Audio...'):
+                Doppler_audio(input_file, output_file, delta_f, v_e, c)
 
         column[1].markdown(f'**Audio Original** ({filename}):')
         column[1].audio(archivo)

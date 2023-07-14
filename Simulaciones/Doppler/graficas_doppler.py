@@ -18,18 +18,20 @@ def approx(value1, value2, precision = 0.01): #Devuleve si el valor es aproximad
     else: return False
 
 def plot_frame(posiciones, lamina, concentraciones):
-    #posiciones_ = np.array(posiciones)
+    posiciones_ = np.array(posiciones)
     ax.clear()
+    ax.set_frame_on=False
     #ax.axis('off')
     #ax.set_xticks([])
     #ax.set_yticks([])
     ax.set_xlim(-dim_x/2, dim_x/2)
     ax.set_ylim(0, dim_y)
     ax.add_patch(Rectangle((lamina.posicion-lamina.anchura, 0), lamina.anchura*2, lamina.altura, facecolor='gray'))
-    ax.scatter(posiciones_[:,0], posiciones_[:,1], s=4)
-    ax.scatter(posiciones_[490:500,0], posiciones_[490:500,1], s=14, c='red') # Coloreamos un punto arbitrario rojo
-    ax.vlines(lamina.posicion, 0,100, colors='black')
-    ax.vlines(lamina.extremos[1], 0,100, colors='red')
+    if len(posiciones)>0:
+        ax.scatter(posiciones_[:,0], posiciones_[:,1], s=4)
+        ax.scatter(posiciones_[490:500,0], posiciones_[490:500,1], s=14, c='red') # Coloreamos un punto arbitrario rojo
+    #ax.vlines(lamina.posicion, 0,100, colors='black')
+    #ax.vlines(lamina.extremos[1], 0,100, colors='red')
 
     #ax[1].clear()
     #ax[1].set_xlim(0, dim_x)
@@ -47,7 +49,7 @@ def animate(frame):
     posiciones = []
     concentraciones = [0]*300
     prev_particulas = particulas
-    for particula in particulas:
+    for particula in prev_particulas:
         particula.mover(lamina)
         posiciones.append(particula.posicion)
         particula.time += time_interval
@@ -63,8 +65,8 @@ def animate(frame):
 def random_grid(n_points, dim_x = 100, dim_y = 100):
     points = []
     for _ in np.arange(n_points):
-        x = np.random.rand(1) * dim_x
-        y = np.random.rand(1) * dim_y
+        x = np.random.rand(1)[0] * dim_x*2 - dim_x
+        y = np.random.rand(1)[0] * dim_y*2 - dim_y
         points.append([x,y])
 
     return np.array(points)
@@ -139,7 +141,7 @@ class particle:
 
         elif self.MAS==False:
            #Comprobamos si hay alguna partícula de aprox el mismo valor de x que la particula actual para iniciar su MAS
-            for objeto in prev_particulas:
+            for objeto in particulas:
                 if objeto.posicion[0]  <= self.posicion[0] and objeto.posicion[0]+ .5 > self.posicion[0] and objeto.MAS == True and objeto.desfase + objeto.frecuencia*2*np.pi*self.time > np.pi:
                     self.time = 0
                     self.posicion_inicial = self.posicion
@@ -172,39 +174,27 @@ np.random.seed(2)
 global dim_x, dim_y
 
 dim_x = 300
-dim_y = 50
-densidad = 5.0
+dim_y = 20
 anchura = 4.0
-
-posiciones = random_grid(100, dim_x, dim_y)
-
-particulas = []
-posiciones = []
-
 amplitud = 3
-frecuencia = 1000
+frecuencia = 5000
 desfase = 0
 
-lamina = lámina(-150 + anchura, anchura, dim_y, amplitud, frecuencia, desfase)
+lamina = lámina(0 -anchura, anchura, dim_y, amplitud, frecuencia, desfase)
+posiciones = random_grid(3000, dim_x, dim_y).tolist()
+posiciones = np.where(np.array(posiciones)[0,:], posiciones, posiciones)
+particulas = []
+#print( np.where(np.array(posiciones)[0,:], posiciones, posiciones))
 
+for posicion in posiciones:
+    angulo = np.random.rand(1)[0]*360
+    velocidad = np.random.rand(1)[0]*0.05+0.05
+    nueva_particula = particle(posicion, angulo, velocidad, amplitud, frecuencia, desfase)
+    particulas.append(nueva_particula)
 
-#for x in range(-dim_x//2, dim_x//2)[:]:
-#    #if x > lamina.posicion and x < lamina.posicion+lamina.anchura: continue
-#    for y in range(dim_y):
-#        if np.random.rand(1)*100 <= densidad:
-#            angulo = np.random.rand(1)[0]*360
-#            velocidad = np.random.rand(1)[0]*0.05+0.05
-#            velocidad = 0
-#            #angulo = 180.0
-#            #velocidad = + 0.5
-#            nueva_particula = particle([x,y], angulo, velocidad, amplitud, frecuencia, desfase)
-#
-#            particulas.append(nueva_particula)
-#            posiciones.append([x,y])
-#
-#print(len(posiciones))
-
+particulas=[]
 prev_particulas = particulas
+
 # Crea la figura y el objeto de ejes
 fig, ax = plt.subplots(1, figsize=(15,5))
 fig.set_size_inches(10,5, forward=True)
@@ -216,7 +206,7 @@ plt.show()
 
 # Guarda la animación
 print('Creating animation')
-ani.save('./Simulaciones/Doppler/animacion_onda.gif', writer='pillow', fps=15)
+ani.save('./Simulaciones/Doppler/partículas libres.gif', writer='pillow', fps=15)
 print('Animation created')
 
 # Mostrar en streamlit #

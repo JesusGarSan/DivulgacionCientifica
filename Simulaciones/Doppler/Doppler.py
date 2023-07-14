@@ -47,7 +47,9 @@ circles = []
 
 
 parametros, dim_x, dim_y = dashboard_parametros()
-crear_animación(parametros,  dim_x, dim_y, height = 550, width = 1500)
+
+with st.spinner('Creando animación...'):
+    crear_animación(parametros,  dim_x, dim_y, height = 550, width = 1500)
 
 # Crear la figura y los ejes
 fig = plt.figure(figsize=(10,3))
@@ -58,4 +60,5 @@ ax.set_frame_on=False
 # ------ ALTERADOR DE AUDIO VIA DOPPLER NO SE QUÉ -------
 st.divider()
 velocidad_emisor = parametros['velocidad_emisor']  /parametros['escala']
+
 audio_to_Doppler(parametros['f_receptor'], parametros['f_emisor'], velocidad_emisor, parametros['velocidad_sonido'])

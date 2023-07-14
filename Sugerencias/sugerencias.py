@@ -2,9 +2,15 @@ import streamlit as st
 from pathlib import Path
 
 import setup_page
-setup_page.setup_page('centered')
+setup_page.setup_page('centered', local_css="./Sugerencias/styles/styles.css")
 
-st.header('Contacto')
+st.title(':mailbox_with_mail: Buzón de sugerencias')
+
+st.write("""
+Puedes usar este formulario para ponerte en contacto con nosotros. Estamos abiertos a **sugerencias para la página**, **dudas** que tengas y te gustaría que tratásemos o cualquier otra cuestión.
+         
+¡Estaremos encantados de leer lo que nos escribas!
+         """)
 
 contact_form="""
 <form action="https://formsubmit.co/the.quid.es@gmail.com" method="POST">
@@ -13,16 +19,9 @@ contact_form="""
      <input type="hidden" name="_captcha" value="false">
      <input type="text" name="name" placeholder="Tu nombre" required>
      <input type="email" name="email" placeholder="Tu e-mail" required>
-     <textarea name="message" placeholder="Indícanos tu Sugerencia o Pregunta"></textarea>
+     <textarea name="message" placeholder="Indícanos tu Sugerencia o Pregunta" required></textarea>
      <button type="submit">Enviar</button>
 </form>
 """
 
 st.markdown(contact_form, unsafe_allow_html=True)
-
-def local_css(file_name):
-    with open(file_name) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
-
-local_css("./Sugerencias/styles/styles.css")
