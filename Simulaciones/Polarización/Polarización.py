@@ -44,7 +44,7 @@ def animation_dashboard():
 
     return frames, fps, pos_camara, vel_camara
 
-@st.cache_data(show_spinner=True)
+@st.cache_data(show_spinner=False)
 def crear_animación(params):
     # Figura sobre la que se mostrará la animación
     fig = plt.figure(figsize=(7, 5))
@@ -135,4 +135,4 @@ lines = []
 
 with column[1]:
     params = [n_inicial_ondas, amplitud, 0, polarizar , desfasar, 0, pos_camara, vel_camara ] 
-    crear_animación(params)
+    with st.spinner('Creando animación...'): crear_animación(params)

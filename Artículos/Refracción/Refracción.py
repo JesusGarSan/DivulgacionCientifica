@@ -17,14 +17,6 @@ from streamlit_extras.stoggle import stoggle
 import setup_page
 setup_page.setup_page()
 
-#Cargamos los estilos css en la página
-st.markdown('<style>' + open('./styles.css').read() + '</style>', unsafe_allow_html=True)
-
-
-
-
-
-
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
 
 #------------------------------------------------------------------------- DEFINICIÓN DE FUNCIONES ------------------------------------------------------------------------

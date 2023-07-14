@@ -24,7 +24,7 @@ def pregunta_tema():
          <h4>
          ¿Era difícil el tema del artículo?
          </h4>
-         """, height=25)
+         """, height=50)
     
     if st.session_state.respuesta_1 != False:
         com.html(f"""
@@ -34,7 +34,7 @@ def pregunta_tema():
             <h4 style="background-color: #E3B505">
             😊 ¡Gracias por tu respuesta! 😊
             </h4>
-            """, height=30)
+            """, height=50)
     
     else:
 
@@ -57,7 +57,7 @@ def pregunta_explicacion():
          <h4>
          ¿Ha sido fácil de entender la explicación?
          </h4>
-         """, height=25)
+         """, height=50)
     
     if st.session_state.respuesta_2 != False:
         com.html(f"""
@@ -67,7 +67,7 @@ def pregunta_explicacion():
             <h4 style="background-color: #2ec4b6">
             👐 ¡Gracias por tu respuesta! 👐
             </h4>
-            """, height=30)
+            """, height=50)
     
     else:
 
@@ -91,7 +91,7 @@ def pregunta_simulacion():
          <h4>
          ¿Han sido útiles las simulaciones?
          </h4>
-         """, height=25)
+         """, height=50)
     
     if st.session_state.respuesta_3 != False:
         com.html(f"""
@@ -101,7 +101,7 @@ def pregunta_simulacion():
             <h4 style="background-color: #FF6F33">
             🌟 ¡Gracias por tu respuesta! 🌟
             </h4>
-            """, height=30)
+            """, height=50)
     
     else:
 
@@ -130,14 +130,22 @@ def mostrar_cuestionario():
     if 'respuesta_3' not in st.session_state:
         st.session_state.respuesta_3 = False
 
+
+    temp = r'''
+        h2{
+        text-align: center;
+        font-size: 60px;
+        }
+    '''
     com.html(f"""
         <style>
         {design}
+        {temp}
         </style>
-        <h1>
+        <h2>
         ¡Gracias por leer!
         </h1>
-        """, height=100)
+        """, height=130)
 
 
     if pregunta_tema() == True: st.experimental_rerun()

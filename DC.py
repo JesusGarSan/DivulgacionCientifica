@@ -216,11 +216,9 @@ def carrusel(hrefs, clases, nombres, srcs):
 
 from streamlit_antd_components import *
 
-
 st.title('Publicaciones recientes')
 hrefs, clases, nombres, srcs = get_recent('publicaciones.csv', 5)
 carrusel(hrefs, clases, nombres, srcs)
-
 
 
 
