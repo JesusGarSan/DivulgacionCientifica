@@ -48,6 +48,7 @@ def init_pages():
             Page("Simulaciones/Doppler/Doppler.py", "Efecto Doppler", icon="🎯"),
             Page("Simulaciones/Polarización/Polarización.py", "Polarización de la luz", icon=":bulb:"),
             # Sugerencias
-            Page('Sugerencias/sugerencias.py', 'Sugerencias')
+            Page('Sugerencias/sugerencias.py', 'Sugerencias'),
+            Page("Sugerencias/agradecimiento.py", "Gracias"),
         ]
     )
