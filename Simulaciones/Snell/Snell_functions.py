@@ -115,7 +115,8 @@ def snell(n_1, n_2, O_1):
 
 
 def incidencia(rayo_incidente, fronteras, n, n_reflexiones, plot_reflexiones, plot_refracciones, max_reflexiones):
-    if rayo_incidente.extremo[0]>1: return
+    if rayo_incidente.extremo[0]>1: return # Esto hace que no se generen los rayos que se salen horizontalmente de la figura
+    if rayo_incidente.extremo[1]==1: return # Esto hace que no se reflejen los rayos que llegan al "techo" del gráfico
     if n_reflexiones >=max_reflexiones: pass
     else:
         #Reflexión
