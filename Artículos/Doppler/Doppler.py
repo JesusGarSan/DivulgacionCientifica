@@ -148,7 +148,9 @@ Las partículas de aire oscilantes empujan su vez a las partículas de aire cerc
 ''')
 
 column = st.columns(3)
-column[0].markdown('*Animación de particulas de aire viajando libremente*')
+column[0].image('Galería\GIFs\Partículas Libres.gif')
+column[0].markdown('*Particulas de aire viajando libremente*')
+column[1].image('Galería\GIFs\Lámina en vacío.gif')
 column[1].markdown('*Lámina vibrando en el vacío*')
 column[2].markdown('*Lámina vibrando en el aire y propagando la vibración*')
 
@@ -272,7 +274,8 @@ Por tanto: escuchamos el sonido emitido de forma más aguda cuando el emisor se 
 # ---------- ANIMACIÓN INTERACTIVA DE DOPPLER ---------------
 
 with column[1]:
-    crear_animación(parametros, dim_x, dim_y, escala_figura, height=300, width = 1100)
+    with st.spinner('Creando animación...'):
+        crear_animación(parametros, dim_x, dim_y, escala_figura, height=300, width = 1100)
 
 
 st.markdown(r'''

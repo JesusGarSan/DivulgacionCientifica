@@ -155,7 +155,7 @@ def crear_animación(parametros, dim_x, dim_y, escala_figura=.28, height = 600, 
                 <h1 style="color: red">
                 """, unsafe_allow_html=True)
     import streamlit.components.v1 as components
-    components.html(ani.to_jshtml(), height=height, width=width)
+    components.html(ani.to_jshtml(default_mode='Once'), height=height, width=width)
 
 
 def dashboard_parametros():

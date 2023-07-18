@@ -13,13 +13,10 @@ import streamlit.components.v1 as com
 
 import os
 # ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
-
 import setup_page
 setup_page.setup_page()
 
-
-
-# ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
+# ------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA --------------------------------------------------------------------
 def parameter_dashboard():
     n_inicial_ondas = st.number_input('Número de ondas', min_value=1, max_value=20, value=5)
     amplitud = st.number_input('Amplitud de las ondas', min_value=0.0, value=0.6)
