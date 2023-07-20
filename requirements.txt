@@ -13,5 +13,6 @@ streamlit-image-coordinates==0.1.5
 streamlit-keyup==0.2.0
 streamlit-toggle-switch==1.0.2
 streamlit-vertical-slider==1.0.2
+streamlit_option_menu==0.3.6
 st-pages==0.4.1
 librosa==0.10.0.post2
