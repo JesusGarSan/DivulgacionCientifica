@@ -6,6 +6,13 @@ import setup_page
 setup_page.setup_page()
 
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
-from functions import mostrar_publicaciones
-mostrar_publicaciones('Simulación')
+from functions import *
+
+st.write('') # Para dar algo de margen superior
+column = st.columns([0.3, 0.7])
+with column[0]:
+    category_selector()
+with column[1]:
+    search_bar('Simulación')
+    mostrar_publicaciones('Simulación')
 
