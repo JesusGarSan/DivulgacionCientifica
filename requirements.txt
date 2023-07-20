@@ -4,7 +4,6 @@ librosa==0.10.0.post2
 matplotlib==3.7.1
 numpy==1.24.3
 pandas==2.0.2
-Pillow==9.5.0
 Pillow==10.0.0
 soundfile==0.12.1
 st_login_form==0.2.0
