@@ -23,6 +23,9 @@ h4{
     font-family: sans-serif
 }
 
+p{
+    text-align: justify;
+}
 
 /* Intento de eliminar el hueco superior de las páginas*/
 .block-container {
@@ -58,4 +61,6 @@ h4{
 [data-testid="collapsedControl"] {
     display: none
 }
+
+/* Intento de crear cuadros de imagenes de publicaciones customizados */
 
