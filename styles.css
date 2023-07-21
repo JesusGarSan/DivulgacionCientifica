@@ -37,6 +37,7 @@ p{
 
 
 /*Intento de esconder la sidebar*/
+/*
 .css-6qob1r{
     display:none;
 }
@@ -56,6 +57,16 @@ p{
 }
 .reportview-container .main .block-container {
     padding-top: 1rem;
+}
+*/
+/*
+[data-testid="stSidebarNav"] {
+    display: none
+}
+*/
+
+[data-testid="stSidebar"] {
+    display: none
 }
 
 [data-testid="collapsedControl"] {
