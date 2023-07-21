@@ -54,7 +54,6 @@ def Doppler_audio(v_e, v_r, c, input_file, output_file):
 
     rate = (1-(v_e-v_r)/c)
     delta_f = Doppler(v_e, v_r, f_0, c) - f_0
-    print(delta_f, Doppler(v_e, v_r, f_0, c), f_0)
 
     if np.abs(delta_f) > 4000:
         st.warning('La diferencia entre la velocidad del emisor y la del receptor no puede ser tan parecida a la velocidad del sonido.')
@@ -254,7 +253,6 @@ def Doppler_audio_dashboard(parametros):
     v_r = parametros['velocidad_receptor']/parametros['escala']
     c   = parametros['velocidad_sonido']
 
-    print(f_0, v_e, v_r, c)
 
     from streamlit_extras.no_default_selectbox import selectbox
     with column[0]:

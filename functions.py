@@ -63,14 +63,15 @@ def filter_results(choice, categories):
 
 
 def search_bar(tipo):
-    import unidecode
+    from st_keyup import st_keyup
+
 
     if 'search' not in st.session_state:
         st.session_state.search = ''
     search = st.session_state.search
 
-    if tipo =='Simulación': search = st.text_input('Búsqueda', placeholder='Busca la simulación que quieras...', label_visibility='collapsed')
-    if tipo =='Artículo': search = st.text_input('Búsqueda', placeholder='Busca el artículo que quieras...', label_visibility='collapsed')
+    if tipo =='Simulación': search = st_keyup('Búsqueda', placeholder='Busca la simulación que quieras...', label_visibility='collapsed')
+    if tipo =='Artículo': search = st_keyup('Búsqueda', placeholder='Busca el artículo que quieras...', label_visibility='collapsed')
     st.session_state.search = search
 
 
@@ -119,7 +120,7 @@ def cuadro_publicacion(tipo, ruta_imagen, nombre):
 
     # --- Required Libraries ---
     
-    from  streamlit_extras.switch_page_button import switch_page
+    from  streamlit_extras.switch_page_button import switch_page 
     from st_clickable_images import clickable_images
 
     # --- Actual Function ---
