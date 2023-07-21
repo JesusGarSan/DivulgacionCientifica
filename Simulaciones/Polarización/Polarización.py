@@ -17,6 +17,7 @@ import setup_page
 setup_page.setup_page()
 
 # ------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA --------------------------------------------------------------------
+
 def parameter_dashboard():
     n_inicial_ondas = st.number_input('Número de ondas', min_value=1, max_value=20, value=5)
     amplitud = st.number_input('Amplitud de las ondas', min_value=0.0, value=0.6)
@@ -119,12 +120,15 @@ def crear_animación(params):
     
 
 
+st.title('Polarización de la luz')
+st.divider()
+st.header('Crea tu propia animación')
 column = st.columns(2)
 
 with column[0]:
-    st.header('Parámetros físicos')
+    st.subheader('Parámetros físicos')
     amplitud, n_inicial_ondas, polarizar,  desfasar, desfases = parameter_dashboard()
-    st.header('Configuración animación')
+    st.subheader('Configuración animación')
     frames, fps, pos_camara, vel_camara = animation_dashboard()
 
 n_ondas = n_inicial_ondas

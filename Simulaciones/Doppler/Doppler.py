@@ -29,36 +29,38 @@ from Doppler_functions import *
 
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
 
+st.title('Efecto Doppler')
+st.divider()
+st.header('Crea tu propia animación')
 
 
-
-#-----------------------------------------------------------------------------------
 # Parámetros controlables
-# Establecer límites de los ejes
-
-
 escala_velocidad = 1/10
 # Variables para almacenar las circunferencias creadas
 circles = []
-
-#Parámetros físicos
-#velocidad_propagacion = 343.2 * escala * escala_velocidad # Velocidad de proagación de la onda. (m/s)
 #-----------------------------------------------------------------------------------------------
-
-
 parametros, dim_x, dim_y = dashboard_parametros()
 
-with st.spinner('Creando animación...'):
-    crear_animación(parametros,  dim_x, dim_y, height = 550, width = 1500)
+if st.button('Crear animación'):
+    with st.spinner('Creando animación...'):
+        crear_animación(parametros,  dim_x, dim_y, height = 550, width = 1500)
 
 # Crear la figura y los ejes
 fig = plt.figure(figsize=(10,3))
 ax = fig.add_axes((0,0,1,1), frameon=False) #Frameon = False quita el are de afuera de los ejes.
-#ax.axis('off')
 ax.set_frame_on=False
 
-# ------ ALTERADOR DE AUDIO VIA DOPPLER NO SE QUÉ -------
-st.divider()
-velocidad_emisor = parametros['velocidad_emisor']  /parametros['escala']
 
-audio_to_Doppler(parametros['f_receptor'], parametros['f_emisor'], velocidad_emisor, parametros['velocidad_sonido'])
+
+# ------ ALTERADOR DE AUDIO VIA DOPPLER NO SE QUÉ -------
+st.header('Modifica tu propio audio según el efecto Doppler')
+column= st.columns(2)
+st.markdown(f"""
+                   Aplica el efecto Doppler a los audios que tu quieras.
+                   Los parámetros que se usan para la alteración son los específicados arriba en la animación.
+                   """)
+#velocidad_emisor = parametros['velocidad_emisor']  /parametros['escala']
+
+
+#v_e, v_r, c, input_file, output_file = Doppler_audio_dashboard()
+Doppler_audio_dashboard(parametros)

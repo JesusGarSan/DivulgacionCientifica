@@ -23,17 +23,8 @@ sys.path.insert(0, 'Simulaciones/Snell/')
 from Snell_functions import *
 
 # ---------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA ----------------------------------------------------------------------
-st.markdown(f"""
-         <div>
-         <style>
-         </style>
-         <h1>
-         Ley de Snell multimedio
-         </h1>
-         </div>
-         """, unsafe_allow_html=True)
-
-st.markdown(' ')
+st.title('Ley de Snell multimedio')
+st.divider()
 column = st.columns(2)
 with column[0]: 
     n, O_1,  plot_reflexiones, plot_refracciones, max_reflexiones = parameter_dashboard()
