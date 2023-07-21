@@ -1,17 +1,14 @@
 import streamlit as st
 
+from st_login_form import *
 
 
+client = login_form()
 
-@st.cache_data('Authenticate')
-def authenticate(username, password):
-    return username == "buddha" and password == "s4msara"
-
-username = st.text_input('username')
-password = st.text_input('password')
-
-if authenticate(username, password):
-    st.success('You are authenticated!')
-    st.write(st.slider('Test widget')) # <- just to show that widgets work here
+if st.session_state["authenticated"]:
+    if st.session_state["username"]:
+        st.success(f"Welcome {st.session_state['username']}")
+    else:
+        st.success("Welcome guest")
 else:
-    st.error('The username or password you have entered is invalid.')
+    st.error("Not authenticated")

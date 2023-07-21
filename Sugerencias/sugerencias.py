@@ -1,8 +1,12 @@
 import streamlit as st
 from pathlib import Path
+from st_pages import *
 
+# ----------------------------------------------------------------- CONFIGURACIÓN INICIAL DE LA PÁGINA -----------------------------------------------------------------
 import setup_page
 setup_page.setup_page('centered', local_css="./Sugerencias/styles/styles_sugerencias.css")
+
+# ------------------------------------------------------------------- CONTENIDO PROPIO DE LA PÁGINA --------------------------------------------------------------------
 
 st.title(':mailbox_with_mail: Buzón de sugerencias')
 
@@ -14,6 +18,7 @@ Puedes usar este formulario para ponerte en contacto con nosotros. Estamos abier
 
 contact_form="""
 <form action="https://formsubmit.co/the.quid.es@gmail.com" method="POST">
+     <input type="hidden" name="_next" value="https://jesusgarsan-divulgacioncientifica-dc-1cv9hy.streamlit.app/Gracias">
      <input type="hidden" name="_template" value="table">
      <input type="hidden" name="_autoresponse" value="¡Gracias por ponerte en contacto con nosotros! A continuación puedes encontrar una copia de tu mensaje:">
      <input type="hidden" name="_captcha" value="false">

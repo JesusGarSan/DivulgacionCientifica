@@ -362,8 +362,7 @@ Pásate a jugar con él:
 #
 #with column[1]:
 #    add_vertical_space(2)
-last_coordinates=None
-if column[(index+1)%2].button('Simulador: Efecto Doppler', use_container_width=True) or last_coordinates!=None:
+if column[1].button('Simulador: Efecto Doppler', use_container_width=True):
     switch_page('Efecto Doppler')
 
 
