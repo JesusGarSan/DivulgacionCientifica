@@ -1,7 +1,0 @@
-﻿Tipo;ruta_pagina;nombre_publico;ruta_imagen;categorias;etiquetas
-Artículo;Snell/Snell.py;Los fantasmas de la carretera;charco.png;Óptica,;charcos,espejismos,verano,sol,carretera,refracción,reflexión,Snell
-Simulación;Snell/Snell.py;Ley de Snell;Snell.png;Óptica,;refracción,reflexión,espejismo
-Artículo;Doppler/Doppler.py;Cómo escuchar la velocidad;ambulancia.png;Ondas, Sonido;ambulancia,Doppler,sonido,match,barrera
-Simulación;Doppler/Doppler.py;Efecto Doppler;Doppler.png;Ondas, Sonido;sonido,ondas,supersónico, supersónica
-Simulación;Polarización/Polarización.py;Polarización de la luz;Polarización.png;Óptica,;gafas,polarizador,sol
-
