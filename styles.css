@@ -1,0 +1,81 @@
+body{
+    background-color: "#c5ecc3";
+}
+
+
+h1{
+    margin-top: 0px;
+    text-align: center;
+    font-size: 60px;
+}
+
+
+
+h2{
+    text-align: center;
+}
+
+h4{
+    text-align: center;
+}
+*{
+    font-family: sans-serif
+}
+
+p{
+    text-align: justify;
+}
+
+/* Intento de eliminar el hueco superior de las páginas*/
+.block-container {
+    padding-top: 1rem;
+    padding-bottom: 0rem;
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+
+
+/*Intento de esconder la sidebar*/
+/*
+.css-6qob1r{
+    display:none;
+}
+.css-xrw2fy{
+    display:none;
+}
+
+.e1akgbir11{
+    display:none;
+}
+.e1akgbir3{
+    display:none;
+}
+
+.reportview-container .css-1lcbmhc .css-1outpf7 {
+    padding-top: 35px;
+}
+.reportview-container .main .block-container {
+    padding-top: 1rem;
+}
+*/
+/*
+[data-testid="stSidebarNav"] {
+    display: none
+}
+*/
+
+[data-testid="stSidebar"] {
+    display: none
+}
+
+[data-testid="collapsedControl"] {
+    display: none
+}
+
+/* Escondemos "Press Enter to Apply" de los inputs de streamlit    */
+
+.css-0{
+    visibility: hidden;
+}
+
