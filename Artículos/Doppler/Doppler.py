@@ -148,9 +148,9 @@ Las partículas de aire oscilantes empujan su vez a las partículas de aire cerc
 ''')
 
 column = st.columns(3)
-column[0].image('Galería\GIFs\Partículas Libres.gif')
+column[0].image('Galería/GIFs/Partículas Libres.gif')
 column[0].markdown('*Particulas de aire viajando libremente*')
-column[1].image('Galería\GIFs\Lámina en vacío.gif')
+column[1].image('Galería/GIFs/Lámina en vacío.gif')
 column[1].markdown('*Lámina vibrando en el vacío*')
 column[2].markdown('*Lámina vibrando en el aire y propagando la vibración*')
 
@@ -258,7 +258,7 @@ column[0].markdown('En la animación **[Emisor inmóvil]** de la derecha podemos
     
 
 #column[1].subheader('Emisor inmóvil')
-#column[1].image('Artículos\Doppler\emisión estática.gif')
+#column[1].image('Artículos/Doppler/emisión estática.gif')
 
 column[0].markdown(r'''
 Si en lugar de mantener la fuente emisora quieta la hacemos moverse **[Emisor en movimiento]** sucede algo curioso:
