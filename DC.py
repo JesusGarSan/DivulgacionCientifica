@@ -119,10 +119,7 @@ def carrusel_HTML(hrefs, clase, nombres, srcs, counter):
          from {opacity: .4} 
          to {opacity: 1}
          }
-         /* On smaller screens, decrease text size */
-         @media only screen and (max-width: 300px) {
-         .text {font-size: 11px}
-         }
+
          /* Botones de navegación */
          .prev, .next {
          cursor: pointer;
