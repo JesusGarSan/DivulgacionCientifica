@@ -79,3 +79,20 @@ p{
     visibility: hidden;
 }
 
+
+/* adapatación para móvil */
+
+@media (min-width: 768px) {
+    .column {
+    width: 50%; /* En pantallas más grandes, muestra dos columnas lado a lado */
+    }
+    .block-container {
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
+    }
+}
+
+
+
