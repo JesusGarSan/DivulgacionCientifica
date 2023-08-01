@@ -59,6 +59,7 @@ def carrusel_HTML(hrefs, clase, nombres, srcs, counter):
          /* Slideshow container */
          .slideshow-container {
          max-width: 80%;
+         height: 50%;
          position: relative;
          margin: auto;
          }
@@ -118,6 +119,10 @@ def carrusel_HTML(hrefs, clase, nombres, srcs, counter):
          @keyframes fade {
          from {opacity: .4} 
          to {opacity: 1}
+         }
+         /* On smaller screens, decrease text size */
+         @media only screen and (max-width: 300px) {
+         .text {font-size: 11px}
          }
          /* Botones de navegación */
          .prev, .next {
