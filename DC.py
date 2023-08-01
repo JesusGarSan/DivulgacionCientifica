@@ -119,7 +119,6 @@ def carrusel_HTML(hrefs, clase, nombres, srcs, counter):
          from {opacity: .4} 
          to {opacity: 1}
          }
-
          /* Botones de navegación */
          .prev, .next {
          cursor: pointer;
