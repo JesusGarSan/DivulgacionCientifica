@@ -1,12 +1,13 @@
 body{
     background-color: "#c5ecc3";
+    font-size: 16px;
 }
 
 
 h1{
     margin-top: 0px;
     text-align: center;
-    font-size: 60px;
+    font-size: 3em;
 }
 
 
@@ -82,17 +83,12 @@ p{
 
 /* adapatación para móvil */
 
-@media (min-width: 768px) {
-    .column {
-    width: 50%; /* En pantallas más grandes, muestra dos columnas lado a lado */
-    }
-    .block-container {
-    padding-top: 0rem;
-    padding-bottom: 0rem;
-    padding-left: 0rem;
-    padding-right: 0rem;
+@media (max-width: 720px) {
+
+    h1{
+        font-size: 30px;
+        color: blue;
     }
 }
-
 
 
